@@ -36,7 +36,8 @@
         <Button
             android:id="@+id/optionsButton"
             style="@style/menu_button"
-            android:text="@string/options" />
+            android:text="@string/options"
+            android:textSize="10sp"/>
         <Button
             android:id="@+id/creditsButton"
             style="@style/menu_button"

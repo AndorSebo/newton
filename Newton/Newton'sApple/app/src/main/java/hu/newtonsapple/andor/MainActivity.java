@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button playButton, optionsButton, creditsButton;
+    ImageButton playButton, optionsButton, creditsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
 
-        playButton = (Button) findViewById(R.id.playButton);
-        optionsButton = (Button) findViewById(R.id.optionsButton);
-        creditsButton = (Button) findViewById(R.id.creditsButton);
+        playButton = (ImageButton) findViewById(R.id.playButton);
+        optionsButton = (ImageButton) findViewById(R.id.optionsButton);
+        creditsButton = (ImageButton) findViewById(R.id.creditsButton);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         creditsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(),"CREDITS BUTTON",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"INFO BUTTON",Toast.LENGTH_SHORT).show();
             }
         });
     }

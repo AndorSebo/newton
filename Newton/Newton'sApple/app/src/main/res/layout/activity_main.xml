@@ -29,19 +29,18 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center">
-        <Button
+        <ImageButton
             android:id="@+id/playButton"
             style="@style/menu_button"
-            android:text="@string/play"/>
-        <Button
+            android:src="@drawable/ic_play"/>
+        <ImageButton
             android:id="@+id/optionsButton"
             style="@style/menu_button"
-            android:text="@string/options"
-            android:textSize="10sp"/>
-        <Button
+            android:src="@drawable/ic_settings"/>
+        <ImageButton
             android:id="@+id/creditsButton"
             style="@style/menu_button"
-            android:text="@string/credits"/>
+            android:src="@drawable/ic_info"/>
             </LinearLayout>
 
     </LinearLayout>

@@ -5,4 +5,5 @@ package hu.newtonsapple.andor.Classes;
  */
 
 public class Global {
+
 }

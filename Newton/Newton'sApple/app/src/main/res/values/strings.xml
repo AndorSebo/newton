@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Newton Almája</string>
-    <string name="play">Játék</string>
-    <string name="options">Beállítások</string>
-    <string name="credits">Infó</string>
+    <string name="vibration">Rezgés</string>
+    <string name="music">Zene</string>
+    <string name="settings">Beállítások</string>
 </resources>

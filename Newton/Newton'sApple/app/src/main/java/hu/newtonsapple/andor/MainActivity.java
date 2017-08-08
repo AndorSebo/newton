@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(),"OPTIONS BUTTON",Toast.LENGTH_SHORT).show();
+                Intent settings = new Intent(MainActivity.this, OptionsActivity.class);
+                startActivity(settings);
+                finish();
             }
         });
         creditsButton.setOnClickListener(new View.OnClickListener() {
@@ -46,4 +48,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

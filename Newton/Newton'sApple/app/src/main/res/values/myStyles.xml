@@ -15,5 +15,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginStart">8dp</item>
     </style>
+    <style name="appleStyle">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+    </style>
+
 
 </resources>

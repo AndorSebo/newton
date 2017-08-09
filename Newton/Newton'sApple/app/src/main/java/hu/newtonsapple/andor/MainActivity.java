@@ -1,6 +1,8 @@
 package hu.newtonsapple.andor;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("firstTime", false)) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.putBoolean("vibrate", true);
+            editor.commit();
+        }
+
 
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);

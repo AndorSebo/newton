@@ -6,11 +6,13 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -37,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     int width;
     ObjectAnimator appleAnimator;
     boolean finished = false;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
         animation.stop();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        prefs  = PreferenceManager.getDefaultSharedPreferences(this);
 
         lifeTV = (TextView) findViewById(R.id.heartTV);
         lifeTV.setText(String.valueOf(life));
@@ -178,7 +183,8 @@ public class GameActivity extends AppCompatActivity {
                         collided[0] = true;
                         if(fallLife>5) {
                             life--;
-                            v.vibrate(150);
+                            if (prefs.getBoolean("vibrate", false))
+                                v.vibrate(150);
                         }else
                             life++;
                         apple.setBackgroundResource(0);
@@ -215,14 +221,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean collision(ImageView a, ImageView b){
-        float bl = a.getY();
-        float bt = a.getX();
-        float br = a.getWidth() + bl;
-        float bb = a.getHeight() + bt;
-        float pl = b.getY();
-        float pt = b.getX();
-        float pr = b.getWidth() + pl;
-        float pb = b.getHeight() + pt;
+        int crop = 40;
+        float bl = a.getY()-crop;
+        float bt = a.getX()-crop;
+        float br = a.getWidth() + bl-crop;
+        float bb = a.getHeight() + bt-crop;
+        float pl = b.getY()-crop;
+        float pt = b.getX()-crop;
+        float pr = b.getWidth() + pl-crop;
+        float pb = b.getHeight() + pt-crop;
         if (bl <= pr && bl >= pl && bt >= pt && bt <= pb) {
             return true;
 

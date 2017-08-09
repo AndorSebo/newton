@@ -40,7 +40,7 @@
                 android:id="@+id/vibrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:checked="true"
+                app:checked="false"
                 app:forceAspectRatio="false"
                 app:enabled="true"
                 app:switchDesign="large"
@@ -86,21 +86,4 @@
         </LinearLayout>
 
     </LinearLayout> <!-- Music layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end|bottom">
-
-        <info.hoang8f.widget.FButton
-            android:id="@+id/save"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            fbutton:shadowEnabled="false"
-            fbutton:shadowHeight="0dp"
-            fbutton:cornerRadius="3dp"
-            fbutton:buttonColor="@color/blue_btn_bg_color"
-            android:textColor="@color/button_text_color"/>
-
-    </LinearLayout> <!-- Save layout -->
 </LinearLayout>

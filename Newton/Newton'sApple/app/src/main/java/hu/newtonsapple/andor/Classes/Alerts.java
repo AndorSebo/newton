@@ -1,8 +1,10 @@
 package hu.newtonsapple.andor.Classes;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import hu.newtonsapple.andor.MainActivity;
@@ -14,8 +16,14 @@ import hu.newtonsapple.andor.R;
 
 public class Alerts {
 
-    public static void alertToMenu(final Context context){
+    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator){
         SweetAlertDialog toMenu;
+
+        if(appleAnimator != null && appleAnimator.isRunning())
+            appleAnimator.pause();
+        else if (appleAnimator != null)
+            appleAnimator.resume();
+
         toMenu = new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
         toMenu.setTitleText("Biztosan ki szeretnél lépni?");
         toMenu.setContentText("")
@@ -34,7 +42,37 @@ public class Alerts {
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
+                        if(appleAnimator != null)
+                            appleAnimator.resume();
                         sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+    }
+    public static void alertToEnd(final Context context, int point){
+        SweetAlertDialog toMenu;
+        toMenu = new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+        toMenu.setTitleText("Vége a játéknak!");
+        toMenu.setContentText("A pontszámod: "+String.valueOf(point))
+                .setCancelText("Vissza a menübe")
+                .setConfirmText("Új játék")
+                .setCustomImage(R.drawable.sadapple)
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        Intent reload = ((Activity) context).getIntent();
+                        ((Activity) context).finish();
+                        context.startActivity(reload);
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent menu = new Intent(context ,MainActivity.class);
+                        context.startActivity(menu);
+                        ((Activity)context).finish();
                     }
                 })
                 .show();

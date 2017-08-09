@@ -3,4 +3,5 @@
     <string name="vibration">Rezgés</string>
     <string name="music">Zene</string>
     <string name="settings">Beállítások</string>
+    <string name="save">Mentés</string>
 </resources>

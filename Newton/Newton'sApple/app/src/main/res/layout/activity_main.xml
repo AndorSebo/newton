@@ -40,7 +40,7 @@
         <ImageButton
             android:id="@+id/creditsButton"
             style="@style/menu_button"
-            android:src="@drawable/ic_info"/>
+            android:src="@drawable/toplist"/>
             </LinearLayout>
 
     </LinearLayout>

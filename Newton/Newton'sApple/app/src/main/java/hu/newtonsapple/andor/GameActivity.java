@@ -1,14 +1,18 @@
 package hu.newtonsapple.andor;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +35,8 @@ public class GameActivity extends AppCompatActivity {
     ImageView[] apples = new ImageView[10];
     int height;
     int width;
+    ObjectAnimator appleAnimator;
+    boolean finished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class GameActivity extends AppCompatActivity {
         height = size.y;
         width = size.x;
 
+
         new CountDownTimer(4000, 500) {
             public void onTick(long millisUntilFinished) {
                 rightArrow.setEnabled(false);
@@ -69,20 +76,16 @@ public class GameActivity extends AppCompatActivity {
                 rightArrow.setEnabled(true);
                 leftArrow.setEnabled(true);
                 counter.setVisibility(View.GONE);
+                finished = true;
                 fallApple();
             }
         }.start();
-
-
-
-        Log.d("Apples",String.valueOf(apples.length));
 
         rightArrow.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        Log.d("Touch","UP");
                         leftArrow.setEnabled(true);
                         animator.pause();
                         animation.stop();
@@ -90,14 +93,13 @@ public class GameActivity extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_DOWN:
                         if (newton.getX() != height-(rightArrow.getWidth()/3)){
-                            Log.d("Touch","DOWN");
                             leftArrow.setEnabled(false);
                             animator = ObjectAnimator.ofFloat(newton,"x",height-(rightArrow.getWidth()/3));
                             newton.setScaleX(1f);
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if(!animator.isPaused())
-                                animator.setDuration(1100).start();
+                                animator.setDuration(1200).start();
                             else
                                 animator.resume();
                         }
@@ -112,14 +114,12 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        Log.d("Touch","UP");
                         rightArrow.setEnabled(true);
                         animator.pause();
                         animation.stop();
                         animation.selectDrawable(0);
                         break;
                     case MotionEvent.ACTION_DOWN:
-                        Log.d("Touch","DOWN");
                         rightArrow.setEnabled(false);
                         if (newton.getX() != rightArrow.getWidth()/10){
                             animator = ObjectAnimator.ofFloat(newton,"x",rightArrow.getWidth()/10);
@@ -127,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if(!animator.isPaused())
-                                animator.setDuration(1100).start();
+                                animator.setDuration(1200).start();
                             else
                                 animator.resume();
                         }
@@ -140,35 +140,100 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       Alerts.alertToMenu(GameActivity.this);
+        if(finished)
+            Alerts.alertToMenu(GameActivity.this, appleAnimator);
+        else {
+            Intent menu = new Intent(GameActivity.this, MainActivity.class);
+            startActivity(menu);
+            finish();
+        }
     }
 
     private void fallApple(){
         int sldAppleId;
-        final ImageView apple;
-        final ObjectAnimator appleAnimator;
+        final float appleY;
+        final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         for(int i=0; i<apples.length;i++){
             int resID = getResources().getIdentifier("fall"+(i+1), "id", getPackageName());
             apples[i] = (ImageView) findViewById(resID);
         }
-       // while(life > 0){
+
+        if(life > 0) {
             sldAppleId = randomApple(apples.length);
-            apple = apples[5];
-            apple.setBackgroundResource(R.drawable.ic_apple);
-            appleAnimator = ObjectAnimator.ofFloat(apple,"y",height);
-            appleAnimator.setDuration(2000).start();
+            final ImageView apple = apples[sldAppleId];
+            appleY = apple.getY();
+            final int fallLife = fallLife();
+            if(fallLife <6)
+                apple.setBackgroundResource(R.drawable.heart);
+            else
+                apple.setBackgroundResource(R.drawable.ic_apple);
+
+            appleAnimator = ObjectAnimator.ofFloat(apple, "y", height);
+            appleAnimator.setDuration(1300).start();
+            final boolean[] collided = {false};
             appleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    //TODO---- COLLIDER VIZSGÁLAT
+                    if (collision(apple, newton) && !collided[0]) {
+                        collided[0] = true;
+                        if(fallLife>5) {
+                            life--;
+                            v.vibrate(150);
+                        }else
+                            life++;
+                        apple.setBackgroundResource(0);
+                        lifeTV.setText(String.valueOf(life));
+                    }
                 }
-
             });
-        //}
+            appleAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    if (!collided[0]) {
+                        if (fallLife>5)
+                            point++;
+                        pointTV.setText(String.valueOf(point));
+                    }
+                    apple.setBackgroundResource(0);
+                    apple.setY(appleY);
+                    fallApple();
+                }
+            });
+        }else{
+            Alerts.alertToEnd(GameActivity.this,point);
+        }
+    }
+
+    private int fallLife(){
+        Random rn = new Random();
+        return  rn.nextInt(101);
     }
 
     private int randomApple(int length){
         Random rn = new Random();
         return rn.nextInt(length);
     }
+
+    private boolean collision(ImageView a, ImageView b){
+        float bl = a.getY();
+        float bt = a.getX();
+        float br = a.getWidth() + bl;
+        float bb = a.getHeight() + bt;
+        float pl = b.getY();
+        float pt = b.getX();
+        float pr = b.getWidth() + pl;
+        float pb = b.getHeight() + pt;
+        if (bl <= pr && bl >= pl && bt >= pt && bt <= pb) {
+            return true;
+
+        } else if (br >= pl && br <= pr && bb >= pt && bb <= pb) {
+            return true;
+        } else if (bt <= pb && bt >= pt && br >= pl && br <= pr) {
+            return true;
+        } else if (bb >= pt && bb <= pb && bl >= pl && bl <= pr) {
+            return true;
+        }
+        return false;
+    }
+
 }

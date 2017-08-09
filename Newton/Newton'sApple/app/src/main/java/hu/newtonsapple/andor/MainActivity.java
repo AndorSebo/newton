@@ -5,13 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton playButton, optionsButton, creditsButton;
+    ImageButton playButton, optionsButton, toplistButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);
-        creditsButton = (ImageButton) findViewById(R.id.creditsButton);
+        toplistButton = (ImageButton) findViewById(R.id.creditsButton);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        creditsButton.setOnClickListener(new View.OnClickListener() {
+        toplistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(),"INFO BUTTON",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"TOPLIST BUTTON",Toast.LENGTH_SHORT).show();
             }
         });
     }

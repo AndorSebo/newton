@@ -45,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center|top">
+            android:gravity="center|top"
+            android:paddingBottom="16dp">
             <ImageView
                 android:id="@+id/fall1"
                 style="@style/appleStyle"/>
@@ -92,6 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:src="@drawable/newton_run"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:paddingBottom="16dp"/>
 
     </FrameLayout>
@@ -105,7 +108,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="end">
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"

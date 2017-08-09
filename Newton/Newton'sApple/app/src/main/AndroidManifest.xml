@@ -3,6 +3,8 @@
     package="hu.newtonsapple.andor"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         tools:replace="android:icon"
         android:allowBackup="true"
@@ -16,14 +18,15 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GameActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".OptionsActivity"></activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>

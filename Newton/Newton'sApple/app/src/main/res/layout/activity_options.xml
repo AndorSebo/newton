@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="hu.newtonsapple.andor.OptionsActivity"
     android:background="@color/background"
     android:padding="16dp"
@@ -34,19 +36,29 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:layout_gravity="center">
-            <CheckBox
-                android:id="@+id/vibrationCB"
+            <com.rm.rmswitch.RMSwitch
+                android:id="@+id/vibrate"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                app:checked="true"
+                app:forceAspectRatio="false"
+                app:enabled="true"
+                app:switchDesign="large"
+                app:switchBkgCheckedColor="@color/blue_btn_bg_color"
+                app:switchBkgNotCheckedColor="#444444"
+                app:switchToggleCheckedColor="@color/button_text_color"
+                app:switchToggleNotCheckedColor="@color/button_text_color"/>
+
+
+
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout> <!-- Vibrate layout -->
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="32dp">
+        android:paddingTop="16dp">
          <TextView
              android:text="@string/music"
              style="@style/textStyle"
@@ -56,13 +68,39 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:layout_gravity="center">
-            <CheckBox
-                android:id="@+id/musicCB"
+
+            <com.rm.rmswitch.RMSwitch
+                android:id="@+id/music"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                app:checked="true"
+                app:forceAspectRatio="false"
+                app:enabled="true"
+                app:switchDesign="large"
+                app:switchBkgCheckedColor="@color/blue_btn_bg_color"
+                app:switchBkgNotCheckedColor="#444444"
+                app:switchToggleCheckedColor="@color/button_text_color"
+                app:switchToggleNotCheckedColor="@color/button_text_color"/>
+
+
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout> <!-- Music layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end|bottom">
 
+        <info.hoang8f.widget.FButton
+            android:id="@+id/save"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            fbutton:shadowEnabled="false"
+            fbutton:shadowHeight="0dp"
+            fbutton:cornerRadius="3dp"
+            fbutton:buttonColor="@color/blue_btn_bg_color"
+            android:textColor="@color/button_text_color"/>
+
+    </LinearLayout> <!-- Save layout -->
 </LinearLayout>

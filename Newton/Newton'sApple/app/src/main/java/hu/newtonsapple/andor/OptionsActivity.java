@@ -1,18 +1,22 @@
 package hu.newtonsapple.andor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.rm.rmswitch.RMSwitch;
 
 public class OptionsActivity extends AppCompatActivity {
 
     RMSwitch vibrate, music;
+    TextView tabletTV, vibrateTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,8 @@ public class OptionsActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = prefs.edit();
         vibrate = (RMSwitch) findViewById(R.id.vibrate);
         music = (RMSwitch) findViewById(R.id.music);
+        tabletTV = (TextView) findViewById(R.id.tabletTV);
+        vibrateTV = (TextView) findViewById(R.id.vibrateTV);
 
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
 
@@ -43,7 +49,12 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
-
+        if(!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()){
+            tabletTV.setText(getResources().getString(R.string.tablet));
+            vibrate.setChecked(false);
+            vibrate.setClickable(false);
+            vibrateTV.setEnabled(false);
+        }
     }
     @Override
     public void onBackPressed() {

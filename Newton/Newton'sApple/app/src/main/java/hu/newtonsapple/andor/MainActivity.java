@@ -20,15 +20,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
         if (!prefs.getBoolean("firstTime", false)) {
-            SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("firstTime", true);
             editor.putBoolean("vibrate", true);
             editor.commit();
         }
-
 
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);

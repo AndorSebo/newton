@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -157,7 +156,9 @@ public class GameActivity extends AppCompatActivity {
     private void fallApple(){
         int sldAppleId;
         final float appleY;
+        Random rn = new Random();
         final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         for(int i=0; i<apples.length;i++){
             int resID = getResources().getIdentifier("fall"+(i+1), "id", getPackageName());
             apples[i] = (ImageView) findViewById(resID);
@@ -168,13 +169,14 @@ public class GameActivity extends AppCompatActivity {
             final ImageView apple = apples[sldAppleId];
             appleY = apple.getY();
             final int fallLife = fallLife();
+
             if(fallLife <6)
                 apple.setBackgroundResource(R.drawable.heart);
             else
                 apple.setBackgroundResource(R.drawable.ic_apple);
 
             appleAnimator = ObjectAnimator.ofFloat(apple, "y", height);
-            appleAnimator.setDuration(1300).start();
+            appleAnimator.setDuration(rn.nextInt(250)+1050).start();
             final boolean[] collided = {false};
             appleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -206,6 +208,8 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         }else{
+            if(animator != null)
+                animator.pause();
             Alerts.alertToEnd(GameActivity.this,point);
         }
     }

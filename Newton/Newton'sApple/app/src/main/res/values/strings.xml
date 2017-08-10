@@ -4,4 +4,5 @@
     <string name="music">Zene</string>
     <string name="settings">Beállítások</string>
     <string name="save">Mentés</string>
+    <string name="tablet">Az ön készülékén nem elérhető</string>
 </resources>

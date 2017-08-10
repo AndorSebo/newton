@@ -3,8 +3,12 @@ package hu.newtonsapple.andor.Classes;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import hu.newtonsapple.andor.MainActivity;
@@ -46,8 +50,13 @@ public class Alerts {
                             appleAnimator.resume();
                         sDialog.dismissWithAnimation();
                     }
-                })
-                .show();
+                }).show();
+        toMenu.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return keyCode == KeyEvent.KEYCODE_BACK;
+            }
+        });
     }
     public static void alertToEnd(final Context context, int point){
         SweetAlertDialog toMenu;
@@ -76,5 +85,11 @@ public class Alerts {
                     }
                 })
                 .show();
+        toMenu.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return keyCode == KeyEvent.KEYCODE_BACK;
+            }
+        });
     }
 }

@@ -1486,11 +1486,11 @@ containing a value of this type.
         public static int always=0x7f0b0016;
         public static int beginning=0x7f0b0013;
         public static int bottom=0x7f0b0021;
-        public static int cancel_button=0x7f0b0051;
+        public static int cancel_button=0x7f0b0052;
         public static int checkbox=0x7f0b002e;
         public static int collapseActionView=0x7f0b0017;
-        public static int confirm_button=0x7f0b0052;
-        public static int content_text=0x7f0b0050;
+        public static int confirm_button=0x7f0b0053;
+        public static int content_text=0x7f0b0051;
         public static int custom_image=0x7f0b0045;
         public static int decor_content_parent=0x7f0b0034;
         public static int default_activity_button=0x7f0b0029;
@@ -1514,6 +1514,7 @@ containing a value of this type.
         public static int mask_left=0x7f0b004a;
         public static int mask_right=0x7f0b0049;
         public static int middle=0x7f0b0015;
+        public static int name=0x7f0b0050;
         public static int never=0x7f0b0019;
         public static int none=0x7f0b000e;
         public static int normal=0x7f0b000a;
@@ -1604,6 +1605,7 @@ containing a value of this type.
         public static int dialog_cancel=0x7f050011;
         public static int dialog_default_title=0x7f050012;
         public static int dialog_ok=0x7f050013;
+        public static int name=0x7f050014;
     }
     public static final class style {
         public static int Base_TextAppearance_AppCompat=0x7f090025;

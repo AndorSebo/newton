@@ -401,11 +401,11 @@ int id activity_chooser_view_content 0x7f0b0026
 int id always 0x7f0b0016
 int id beginning 0x7f0b0013
 int id bottom 0x7f0b0021
-int id cancel_button 0x7f0b0051
+int id cancel_button 0x7f0b0052
 int id checkbox 0x7f0b002e
 int id collapseActionView 0x7f0b0017
-int id confirm_button 0x7f0b0052
-int id content_text 0x7f0b0050
+int id confirm_button 0x7f0b0053
+int id content_text 0x7f0b0051
 int id custom_image 0x7f0b0045
 int id decor_content_parent 0x7f0b0034
 int id default_activity_button 0x7f0b0029
@@ -429,6 +429,7 @@ int id loading 0x7f0b0044
 int id mask_left 0x7f0b004a
 int id mask_right 0x7f0b0049
 int id middle 0x7f0b0015
+int id name 0x7f0b0050
 int id never 0x7f0b0019
 int id none 0x7f0b000e
 int id normal 0x7f0b000a
@@ -513,6 +514,7 @@ int string app_name 0x7f050010
 int string dialog_cancel 0x7f050011
 int string dialog_default_title 0x7f050012
 int string dialog_ok 0x7f050013
+int string name 0x7f050014
 int style Base_TextAppearance_AppCompat 0x7f090025
 int style Base_TextAppearance_AppCompat_Body1 0x7f090026
 int style Base_TextAppearance_AppCompat_Body2 0x7f090027

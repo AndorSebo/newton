@@ -171,7 +171,6 @@ public class GameActivity extends AppCompatActivity {
             final ImageView apple = apples[sldAppleId];
             appleY = apple.getY();
             final int fallLife = fallLife();
-
             if(fallLife <6)
                 apple.setBackgroundResource(R.drawable.heart);
             else
@@ -212,6 +211,7 @@ public class GameActivity extends AppCompatActivity {
         }else{
             if(animator != null)
                 animator.pause();
+            newton.setImageResource(R.drawable.newton_dead);
             Alerts.alertToEnd(GameActivity.this,point);
         }
     }

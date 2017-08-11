@@ -52,9 +52,9 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/button_text_color"
+            android:textColor="#880000"
             android:textStyle="bold"
-            android:gravity="bottom|center"/>
+            android:gravity="bottom|end"/>
     </LinearLayout>
 
     </LinearLayout>

@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import hu.newtonsapple.andor.MainActivity;
@@ -86,6 +88,28 @@ public class Alerts {
                 })
                 .show();
         toMenu.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return keyCode == KeyEvent.KEYCODE_BACK;
+            }
+        });
+    }
+
+    public static void getName(Context context, final SharedPreferences.Editor editor, final TextView name){
+        final SweetAlertDialog nameDialog = new SweetAlertDialog(context,SweetAlertDialog.INPUT_TYPE);
+        nameDialog.setTitleText("Add meg a neved!");
+        nameDialog.setConfirmText("Mentés");
+        nameDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                editor.putString("name", sweetAlertDialog.getName());
+                editor.commit();
+                name.setText("Szia, "+sweetAlertDialog.getName()+" jó játékot!");
+                Log.d("Name",sweetAlertDialog.getName());
+                sweetAlertDialog.dismissWithAnimation();
+            }
+        }).show();
+        nameDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 return keyCode == KeyEvent.KEYCODE_BACK;

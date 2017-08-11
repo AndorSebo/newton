@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import hu.newtonsapple.andor.Classes.Alerts;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton playButton, optionsButton, toplistButton;
+    TextView name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +24,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences.Editor editor = prefs.edit();
+        name = (TextView) findViewById(R.id.name);
 
         if (!prefs.getBoolean("firstTime", false)) {
+            Alerts.getName(MainActivity.this,editor, name);
             editor.putBoolean("firstTime", true);
             editor.putBoolean("vibrate", true);
             editor.commit();
+        }else{
+            name.setText("Szia, "+prefs.getString("name","Játékos")+" jó játékot!");
         }
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alerts.getName(MainActivity.this,editor, name);
+            }
+        });
+
 
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);

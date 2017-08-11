@@ -13,6 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/newton"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,12 +26,14 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo"
+            android:layout_weight="0"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_weight="1">
         <ImageButton
             android:id="@+id/playButton"
             style="@style/menu_button"
@@ -41,7 +46,16 @@
             android:id="@+id/creditsButton"
             style="@style/menu_button"
             android:src="@drawable/toplist"/>
+
             </LinearLayout>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/button_text_color"
+            android:textStyle="bold"
+            android:gravity="bottom|center"/>
+    </LinearLayout>
 
     </LinearLayout>
 

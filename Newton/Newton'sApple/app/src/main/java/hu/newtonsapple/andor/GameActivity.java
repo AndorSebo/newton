@@ -39,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     ObjectAnimator appleAnimator;
     boolean finished = false;
     SharedPreferences prefs;
+    CountDownTimer ct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class GameActivity extends AppCompatActivity {
         width = size.x;
 
 
-        new CountDownTimer(4000, 500) {
+        ct = new CountDownTimer(4000, 500) {
             public void onTick(long millisUntilFinished) {
                 rightArrow.setEnabled(false);
                 leftArrow.setEnabled(false);
@@ -103,7 +104,7 @@ public class GameActivity extends AppCompatActivity {
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if(!animator.isPaused())
-                                animator.setDuration(1200).start();
+                                animator.setDuration(1100).start();
                             else
                                 animator.resume();
                         }
@@ -131,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if(!animator.isPaused())
-                                animator.setDuration(1200).start();
+                                animator.setDuration(1100).start();
                             else
                                 animator.resume();
                         }
@@ -147,6 +148,7 @@ public class GameActivity extends AppCompatActivity {
         if(finished)
             Alerts.alertToMenu(GameActivity.this, appleAnimator);
         else {
+            ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
             startActivity(menu);
             finish();

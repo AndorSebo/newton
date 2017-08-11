@@ -51,7 +51,7 @@
                 app:forceAspectRatio="false"
                 app:enabled="true"
                 app:switchDesign="large"
-                app:switchBkgCheckedColor="@color/blue_btn_bg_color"
+                app:switchBkgCheckedColor="@color/red_btn_bg_color"
                 app:switchBkgNotCheckedColor="#444444"
                 app:switchToggleCheckedColor="@color/button_text_color"
                 app:switchToggleNotCheckedColor="@color/button_text_color"/>
@@ -84,7 +84,7 @@
                 app:forceAspectRatio="false"
                 app:enabled="true"
                 app:switchDesign="large"
-                app:switchBkgCheckedColor="@color/blue_btn_bg_color"
+                app:switchBkgCheckedColor="@color/red_btn_bg_color"
                 app:switchBkgNotCheckedColor="#444444"
                 app:switchToggleCheckedColor="@color/button_text_color"
                 app:switchToggleNotCheckedColor="@color/button_text_color"/>

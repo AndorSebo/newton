@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "822953005640",
+    "firebase_url": "https://newtons-apple-40462.firebaseio.com",
+    "project_id": "newtons-apple-40462",
+    "storage_bucket": "newtons-apple-40462.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822953005640:android:d49eb96d43560c03",
+        "android_client_info": {
+          "package_name": "hu.newtonsapple.andor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822953005640-12su3fb2sls445pjcks9m2mnqb2uhokl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hu.newtonsapple.andor",
+            "certificate_hash": "1f880d2ebeffb10b2a84ef247fa70ef5b95e3b7b"
+          }
+        },
+        {
+          "client_id": "822953005640-nurmhqcqohg7tda2grl7vckv4jmd8nka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT_4MMFr5VLz-iNI2-WqqDvbG02HE4x68"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822953005640-nurmhqcqohg7tda2grl7vckv4jmd8nka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

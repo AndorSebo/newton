@@ -14,17 +14,22 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 
 import hu.newtonsapple.andor.Classes.Alerts;
+import hu.newtonsapple.andor.Classes.User;
+import hu.newtonsapple.andor.Classes.startApp;
 
 public class GameActivity extends AppCompatActivity {
     private int life = 3;
@@ -35,13 +40,13 @@ public class GameActivity extends AppCompatActivity {
     ObjectAnimator animator;
 
     ImageView[] apples = new ImageView[10];
-    int height, width, fell;
+    int height, width, fell, heightScore;
     ObjectAnimator appleAnimator;
     boolean finished = false;
     SharedPreferences prefs;
     CountDownTimer ct;
-    int speed = 1050;
-    int heightScore;
+    final static int speed = 1100;
+    DatabaseReference userReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,8 @@ public class GameActivity extends AppCompatActivity {
 
         lifeTV = (TextView) findViewById(R.id.heartTV);
         lifeTV.setText(String.valueOf(life));
+
+        userReference = FirebaseDatabase.getInstance().getReference("users");
 
         pointTV = (TextView) findViewById(R.id.pointTV);
         pointTV.setText(String.valueOf(point));
@@ -110,7 +117,9 @@ public class GameActivity extends AppCompatActivity {
                         if (newton.getX() != height - (rightArrow.getWidth() / 3)) {
                             leftArrow.setEnabled(false);
                             animator = ObjectAnimator.ofFloat(newton, "x", height - (rightArrow.getWidth() / 3));
+                            animator.setInterpolator(new LinearInterpolator());
                             newton.setScaleX(1f);
+                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if (!animator.isPaused())
@@ -138,13 +147,16 @@ public class GameActivity extends AppCompatActivity {
                         rightArrow.setEnabled(false);
                         if (newton.getX() != rightArrow.getWidth() / 10) {
                             animator = ObjectAnimator.ofFloat(newton, "x", rightArrow.getWidth() / 10);
+                            animator.setInterpolator(new LinearInterpolator());
                             newton.setScaleX(-1f);
-                            animation = (AnimationDrawable) newton.getDrawable();
-                            animation.start();
-                            if (!animator.isPaused())
-                                animator.setDuration(speed).start();
-                            else
-                                animator.resume();
+                            if(newton.getDrawable() != getResources().getDrawable(R.drawable.newton_dead)){
+                                animation = (AnimationDrawable) newton.getDrawable();
+                                animation.start();
+                                if (!animator.isPaused())
+                                    animator.setDuration(speed).start();
+                                else
+                                    animator.resume();
+                            }
                         }
                         break;
                 }
@@ -186,6 +198,7 @@ public class GameActivity extends AppCompatActivity {
             newton.setImageResource(R.drawable.newton_dead);
             if (point > heightScore){
                 prefs.edit().putInt("HeightScore",point).apply();
+                sendScore(point);
             }
             Alerts.alertToEnd(GameActivity.this, point);
         }
@@ -275,6 +288,15 @@ public class GameActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void sendScore(int point){
+        String name = prefs.getString("name","Játékos");
+        int score = point;
+        String id = userReference.push().getKey();
+        User user = new User(id,name,score);
+        userReference.child(id).setValue(user);
+
     }
 
 }

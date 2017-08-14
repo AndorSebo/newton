@@ -2,7 +2,9 @@ package hu.newtonsapple.andor;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +13,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onurciner.toastox.ToastOX;
+
 import hu.newtonsapple.andor.Classes.Alerts;
+import hu.newtonsapple.andor.Classes.Global;
+import hu.newtonsapple.andor.Classes.startApp;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton playButton, optionsButton, toplistButton;
     TextView name;
+    MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +35,15 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = prefs.edit();
         name = (TextView) findViewById(R.id.name);
 
+        music = MediaPlayer.create(getBaseContext(),R.raw.music);
+        music.start();
+        music.setLooping(true);
+
+
         if (!prefs.getBoolean("firstTime", false)) {
             Alerts.getName(MainActivity.this,editor, name);
             editor.putBoolean("firstTime", true);
-            editor.putBoolean("vibrate", true);
-            editor.commit();
+            editor.putBoolean("vibrate", true).apply();
         }else{
             name.setText("Szia, "+prefs.getString("name","Játékos")+" jó játékot!");
         }
@@ -43,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 Alerts.getName(MainActivity.this,editor, name);
             }
         });
-
 
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);
@@ -77,4 +87,5 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
 }

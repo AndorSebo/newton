@@ -4,5 +4,8 @@
     <string name="music">Zene</string>
     <string name="settings">Beállítások</string>
     <string name="save">Mentés</string>
+
+    <!--Figyelmeztetések-->
     <string name="tablet">Az ön készülékén nem elérhető</string>
+    <string name="network_nf">Nem érhető el internet kapcsolat</string>
 </resources>

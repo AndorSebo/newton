@@ -40,12 +40,12 @@
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\release\\layout\\abc_list_menu_item_checkbox.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
-    },
-    {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\release\\layout\\abc_screen_toolbar.xml",
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\release\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\release\\layout\\abc_search_dropdown_item_icons_2line.xml",

@@ -24,7 +24,7 @@
                 style="@style/textStyle"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom">
             <ImageView
@@ -40,44 +40,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/apples"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center|top"
-            android:paddingBottom="16dp">
-            <ImageView
-                android:id="@+id/fall1"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall2"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall3"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall4"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall5"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall6"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall7"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall8"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall9"
-                style="@style/appleStyle"/>
-            <ImageView
-                android:id="@+id/fall10"
-                style="@style/appleStyle"/>
-        </LinearLayout>
 
         <TextView
             android:id="@+id/counter"
@@ -97,46 +59,103 @@
             android:adjustViewBounds="true"
             android:paddingBottom="16dp"/>
 
+        <LinearLayout
+            android:id="@+id/apples"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|top"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/fall1"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall2"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall3"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall4"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall5"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall6"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall7"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall8"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall9"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall10"
+                style="@style/appleStyle" />
+        </LinearLayout>
+
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="0"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:layout_weight="0">
+        android:padding="8dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_apple"/>
+                android:src="@drawable/ic_apple" />
+
             <TextView
                 android:id="@+id/pointTV"
                 style="@style/textStyle"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_crown"/>
+                android:src="@drawable/ic_crown" />
+
             <TextView
                 android:id="@+id/heightTV"
                 style="@style/textStyle"
                 android:layout_gravity="end"/>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom">
+            android:gravity="bottom|end">
+
             <ImageView
                 android:id="@+id/rightBtn"
                 android:layout_width="wrap_content"

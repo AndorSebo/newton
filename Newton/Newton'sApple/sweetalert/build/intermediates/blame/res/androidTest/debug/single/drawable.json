@@ -36,12 +36,12 @@
         "source": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\bundles\\debug\\res\\drawable\\success_bow.xml"
     },
     {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
-    },
-    {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\Newton'sApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\gray_button_background.xml",

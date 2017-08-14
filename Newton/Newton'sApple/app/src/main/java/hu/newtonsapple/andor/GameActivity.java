@@ -29,7 +29,7 @@ import hu.newtonsapple.andor.Classes.Alerts;
 public class GameActivity extends AppCompatActivity {
     private int life = 3;
     private int point = 0;
-    TextView lifeTV, pointTV, counter;
+    TextView lifeTV, pointTV, counter, heightScoreTV;
     ImageView rightArrow, leftArrow, newton;
     AnimationDrawable animation;
     ObjectAnimator animator;
@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
     SharedPreferences prefs;
     CountDownTimer ct;
     int speed = 1050;
+    int heightScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,8 @@ public class GameActivity extends AppCompatActivity {
         pointTV = (TextView) findViewById(R.id.pointTV);
         pointTV.setText(String.valueOf(point));
 
+        heightScoreTV = (TextView) findViewById(R.id.heightTV);
+
         counter = (TextView) findViewById(R.id.counter);
 
         rightArrow = (ImageView) findViewById(R.id.rightBtn);
@@ -71,6 +74,11 @@ public class GameActivity extends AppCompatActivity {
         height = size.y;
         width = size.x;
         fell = 0;
+
+        heightScore = prefs.getInt("HeightScore",0);
+
+
+        heightScoreTV.setText(String.valueOf(heightScore));
 
         ct = new CountDownTimer(4000, 500) {
             public void onTick(long millisUntilFinished) {
@@ -176,6 +184,9 @@ public class GameActivity extends AppCompatActivity {
             if (animator != null)
                 animator.pause();
             newton.setImageResource(R.drawable.newton_dead);
+            if (point > heightScore){
+                prefs.edit().putInt("HeightScore",point).apply();
+            }
             Alerts.alertToEnd(GameActivity.this, point);
         }
     }

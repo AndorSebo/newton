@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hu.newtonsapple.andor.ToplistActivity"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/userListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/loadingTV"
+        android:text="@string/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingTop="100dp"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <com.victor.loading.newton.NewtonCradleLoading
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/loadingTV"
+        tools:ignore="NotSibling" />
+</RelativeLayout>
+
+
+</LinearLayout>

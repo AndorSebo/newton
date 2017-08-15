@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Newton Almája</string>
+    <string name="vibration">Rezgés</string>
+    <string name="music">Zene</string>
+    <string name="settings">Beállítások</string>
+    <string name="save">Mentés</string>
+
+    <!--Figyelmeztetések-->
+    <string name="tablet">Az ön készülékén nem elérhető</string>
+    <string name="network_nf">Nem érhető el internet kapcsolat</string>
+
+    <!--Toplista stringek-->
+    <string name="score">Pontszám</string>
+    <string name="toplist">Toplista</string>
+    <string name="loading">Betöltés…</string>
+</resources>

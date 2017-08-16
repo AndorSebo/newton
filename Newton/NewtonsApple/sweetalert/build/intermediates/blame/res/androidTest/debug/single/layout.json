@@ -44,12 +44,12 @@
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_bar_up_container.xml"
-    },
-    {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_bar_up_container.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
@@ -58,10 +58,6 @@
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
-    },
-    {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",

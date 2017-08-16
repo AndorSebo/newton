@@ -10,14 +10,15 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Random;
 
 import hu.newtonsapple.andor.Classes.Alerts;
+import hu.newtonsapple.andor.Classes.Global;
 import hu.newtonsapple.andor.Classes.User;
 
 public class GameActivity extends AppCompatActivity {
@@ -54,8 +56,9 @@ public class GameActivity extends AppCompatActivity {
         newton = (ImageView) findViewById(R.id.newton);
         animation = (AnimationDrawable) newton.getDrawable();
         animation.stop();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        Global.setFullScreen(getWindow());
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -83,7 +86,6 @@ public class GameActivity extends AppCompatActivity {
 
         heightScore = prefs.getInt("HeightScore",0);
 
-
         heightScoreTV.setText(String.valueOf(heightScore));
 
         ct = new CountDownTimer(4000, 500) {
@@ -101,67 +103,7 @@ public class GameActivity extends AppCompatActivity {
                 fallLot();
             }
         }.start();
-
-        rightArrow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        leftArrow.setEnabled(true);
-                        animator.pause();
-                        animation.stop();
-                        animation.selectDrawable(0);
-                        break;
-                    case MotionEvent.ACTION_DOWN:
-                        if (newton.getX() != height - (rightArrow.getWidth() / 3)) {
-                            leftArrow.setEnabled(false);
-                            animator = ObjectAnimator.ofFloat(newton, "x", height - (rightArrow.getWidth() / 3));
-                            animator.setInterpolator(new LinearInterpolator());
-                            newton.setScaleX(1f);
-                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
-                            animation = (AnimationDrawable) newton.getDrawable();
-                            animation.start();
-                            if (!animator.isPaused())
-                                animator.setDuration(speed).start();
-                            else
-                                animator.resume();
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
-
-        leftArrow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        rightArrow.setEnabled(true);
-                        animator.pause();
-                        animation.stop();
-                        animation.selectDrawable(0);
-                        break;
-                    case MotionEvent.ACTION_DOWN:
-                        rightArrow.setEnabled(false);
-                        if (newton.getX() != rightArrow.getWidth() / 10) {
-                            animator = ObjectAnimator.ofFloat(newton, "x", rightArrow.getWidth() / 10);
-                            animator.setInterpolator(new LinearInterpolator());
-                            newton.setScaleX(-1f);
-                            if(newton.getDrawable() != getResources().getDrawable(R.drawable.newton_dead)){
-                                animation = (AnimationDrawable) newton.getDrawable();
-                                animation.start();
-                                if (!animator.isPaused())
-                                    animator.setDuration(speed).start();
-                                else
-                                    animator.resume();
-                            }
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
+        inputListeners();
     }
 
     @Override
@@ -218,7 +160,7 @@ public class GameActivity extends AppCompatActivity {
             apple.setBackgroundResource(R.drawable.ic_apple);
 
         appleAnimator = ObjectAnimator.ofFloat(apple, "y", height);
-        appleAnimator.setDuration(rn.nextInt(250) + 1050).start();
+        appleAnimator.setDuration(rn.nextInt(200) + speed).start();
         final boolean[] collided = {false};
         appleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -296,6 +238,74 @@ public class GameActivity extends AppCompatActivity {
         User user = new User(id,name,score);
         userReference.child(id).setValue(user);
 
+    }
+
+    private void inputListeners(){
+
+        rightArrow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        Log.d("INPUT","UP");
+                        leftArrow.setEnabled(true);
+                        animator.pause();
+                        animation.stop();
+                        animation.selectDrawable(0);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d("INPUT","DOWN");
+                        if (newton.getX() != height - (rightArrow.getWidth() / 3)) {
+                            leftArrow.setEnabled(false);
+                            animator = ObjectAnimator.ofFloat(newton, "x", height - (rightArrow.getWidth() / 3));
+                            animator.setInterpolator(new LinearInterpolator());
+                            newton.setScaleX(1f);
+                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
+                            animation = (AnimationDrawable) newton.getDrawable();
+                            animation.start();
+                            if (!animator.isPaused())
+                                animator.setDuration(speed).start();
+                            else
+                                animator.resume();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+        leftArrow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        Log.d("INPUT","UP");
+                        rightArrow.setEnabled(true);
+                        animator.pause();
+                        animation.stop();
+                        animation.selectDrawable(0);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d("INPUT","DOWN");
+                        rightArrow.setEnabled(false);
+                        if (newton.getX() != rightArrow.getWidth() / 10) {
+                            animator = ObjectAnimator.ofFloat(newton, "x", rightArrow.getWidth() / 10);
+                            animator.setInterpolator(new LinearInterpolator());
+                            newton.setScaleX(-1f);
+                            if(newton.getDrawable() != getResources().getDrawable(R.drawable.newton_dead)){
+                                animation = (AnimationDrawable) newton.getDrawable();
+                                animation.start();
+                                if (!animator.isPaused())
+                                    animator.setDuration(speed).start();
+                                else
+                                    animator.resume();
+                            }
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
 }

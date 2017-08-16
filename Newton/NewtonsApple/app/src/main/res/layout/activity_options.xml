@@ -56,41 +56,39 @@
                 app:switchToggleCheckedColor="@color/button_text_color"
                 app:switchToggleNotCheckedColor="@color/button_text_color"/>
 
-
-
         </LinearLayout>
 
     </LinearLayout> <!-- Vibrate layout -->
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingTop="16dp">
-         <TextView
-             android:text="@string/music"
-             style="@style/textStyle"
-             android:textColor="@color/colorAccent"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/controlTV"
+            android:text="@string/control"
+            style="@style/textStyle"
+            android:textColor="@color/colorAccent"
+            android:gravity="start"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:layout_gravity="center">
-
             <com.rm.rmswitch.RMSwitch
-                android:id="@+id/music"
+                android:id="@+id/control"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:checked="true"
+                app:checked="false"
                 app:forceAspectRatio="false"
                 app:enabled="true"
                 app:switchDesign="large"
-                app:switchBkgCheckedColor="@color/red_btn_bg_color"
-                app:switchBkgNotCheckedColor="#444444"
+                app:switchToggleCheckedImage="@drawable/ic_arrow"
+                app:switchToggleNotCheckedImage="@drawable/ic_rotate"
+                app:switchBkgCheckedColor="#5588BB"
+                app:switchBkgNotCheckedColor="#5588BB"
                 app:switchToggleCheckedColor="@color/button_text_color"
                 app:switchToggleNotCheckedColor="@color/button_text_color"/>
-
-
         </LinearLayout>
 
-    </LinearLayout> <!-- Music layout -->
-</LinearLayout>
+    </LinearLayout> <!-- Control layout -->
+</LinearLayout> <!-- Panels -->

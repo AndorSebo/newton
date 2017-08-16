@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import hu.newtonsapple.andor.Classes.Global;
 import hu.newtonsapple.andor.Classes.User;
 import hu.newtonsapple.andor.Classes.UserAdapter;
 
@@ -36,7 +37,7 @@ public class ToplistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toplist);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Global.setFullScreen(getWindow());
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
         userReference = FirebaseDatabase.getInstance().getReference("users");
         loadingTV = (TextView) findViewById(R.id.loadingTV);

@@ -33,7 +33,8 @@
         <activity
             android:name=".OptionsActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".ToplistActivity"></activity>
+        <activity android:name=".ToplistActivity"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>

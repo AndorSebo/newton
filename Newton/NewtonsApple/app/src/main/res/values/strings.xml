@@ -13,4 +13,5 @@
     <string name="score">Pontszám</string>
     <string name="toplist">Toplista</string>
     <string name="loading">Betöltés…</string>
+    <string name="control">Irányítás</string>
 </resources>

@@ -12,28 +12,24 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import hu.newtonsapple.andor.Classes.Alerts;
+import hu.newtonsapple.andor.Classes.Global;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton playButton, optionsButton, toplistButton;
     TextView name;
-    MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        Global.setFullScreen(getWindow());
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = prefs.edit();
         name = (TextView) findViewById(R.id.name);
-
-        music = MediaPlayer.create(getBaseContext(),R.raw.music);
-        music.start();
-        music.setLooping(true);
-
 
         if (!prefs.getBoolean("firstTime", false)) {
             Alerts.getName(MainActivity.this,editor, name);

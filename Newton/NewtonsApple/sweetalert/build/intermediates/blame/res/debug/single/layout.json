@@ -36,12 +36,12 @@
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_menu_item_layout.xml"
     },
     {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_bar_title_item.xml"
-    },
-    {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
         "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
@@ -50,10 +50,6 @@
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\alert_dialog.xml",
         "source": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\src\\main\\res\\layout\\alert_dialog.xml"
-    },
-    {
-        "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Users\\Andor\\.android\\build-cache\\54248b20f3ba8e84d4fdf196011f09d4e89a2196\\output\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "D:\\KutatokEjszakaja\\Android Project\\NewtonsApple\\sweetalert\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",

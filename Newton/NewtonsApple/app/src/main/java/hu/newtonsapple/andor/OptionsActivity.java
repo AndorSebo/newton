@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.rm.rmswitch.RMSwitch;
 
+import hu.newtonsapple.andor.Classes.Global;
+
 public class OptionsActivity extends AppCompatActivity {
 
     RMSwitch vibrate, music;
@@ -22,13 +24,13 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        Global.setFullScreen(getWindow());
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = prefs.edit();
         vibrate = (RMSwitch) findViewById(R.id.vibrate);
-        music = (RMSwitch) findViewById(R.id.music);
         tabletTV = (TextView) findViewById(R.id.tabletTV);
         vibrateTV = (TextView) findViewById(R.id.vibrateTV);
 

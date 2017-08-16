@@ -29,7 +29,6 @@ import java.util.Random;
 
 import hu.newtonsapple.andor.Classes.Alerts;
 import hu.newtonsapple.andor.Classes.User;
-import hu.newtonsapple.andor.Classes.startApp;
 
 public class GameActivity extends AppCompatActivity {
     private int life = 3;

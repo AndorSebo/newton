@@ -4,20 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.onurciner.toastox.ToastOX;
 
 import hu.newtonsapple.andor.Classes.Alerts;
-import hu.newtonsapple.andor.Classes.Global;
-import hu.newtonsapple.andor.Classes.startApp;
 
 public class MainActivity extends AppCompatActivity {
 

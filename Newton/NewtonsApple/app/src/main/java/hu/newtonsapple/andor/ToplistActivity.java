@@ -60,9 +60,8 @@ public class ToplistActivity extends AppCompatActivity {
 
                 userList.clear();
 
-
                 for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                    User u = userSnapshot.getValue(User.class);
+                        User u = userSnapshot.getValue(User.class);
                     userList.add(u);
                 }
                 //RENDEZÉS

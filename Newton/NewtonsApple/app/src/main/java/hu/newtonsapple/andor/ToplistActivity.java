@@ -1,11 +1,13 @@
 package hu.newtonsapple.andor;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ public class ToplistActivity extends AppCompatActivity {
     ListView userListView;
     NewtonCradleLoading loading;
     TextView loadingTV;
+    ImageView backArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,14 @@ public class ToplistActivity extends AppCompatActivity {
         userListView = (ListView) findViewById(R.id.userListView);
         ViewGroup header = (ViewGroup)(getLayoutInflater()).inflate(R.layout.users_header, userListView, false);
         userListView.addHeaderView(header, null, false);
+        backArrow = header.findViewById(R.id.backArrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BackToMenu();
+            }
+        });
 
         userList = new ArrayList<>();
         loading = (NewtonCradleLoading) findViewById(R.id.loader);
@@ -82,13 +93,15 @@ public class ToplistActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
 
     @Override
     public void onBackPressed() {
+        BackToMenu();
+    }
+    private void BackToMenu(){
         Intent menu = new Intent(ToplistActivity.this,MainActivity.class);
         startActivity(menu);
         finish();

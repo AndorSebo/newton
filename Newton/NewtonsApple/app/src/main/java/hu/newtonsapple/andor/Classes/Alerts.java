@@ -24,6 +24,7 @@ public class Alerts {
 
     public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator){
         SweetAlertDialog toMenu;
+        final boolean[] p = {true};
 
         if(appleAnimator != null && appleAnimator.isRunning())
             appleAnimator.pause();
@@ -48,8 +49,9 @@ public class Alerts {
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        if(appleAnimator != null)
+                        if(appleAnimator != null){
                             appleAnimator.resume();
+                        }
                         sDialog.dismissWithAnimation();
                     }
                 }).show();

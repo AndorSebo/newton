@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rm.rmswitch.RMSwitch;
@@ -17,8 +18,9 @@ import hu.newtonsapple.andor.Classes.Global;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    RMSwitch vibrate, music;
+    RMSwitch vibrate;
     TextView tabletTV, vibrateTV;
+    ImageView backArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class OptionsActivity extends AppCompatActivity {
         vibrate = (RMSwitch) findViewById(R.id.vibrate);
         tabletTV = (TextView) findViewById(R.id.tabletTV);
         vibrateTV = (TextView) findViewById(R.id.vibrateTV);
+        backArrow = (ImageView) findViewById(R.id.backArrow);
 
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
 
@@ -57,9 +60,20 @@ public class OptionsActivity extends AppCompatActivity {
             vibrate.setClickable(false);
             vibrateTV.setEnabled(false);
         }
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BackToMenu();
+            }
+        });
     }
     @Override
     public void onBackPressed() {
+        BackToMenu();
+    }
+
+    private void BackToMenu(){
         Intent menu = new Intent(OptionsActivity.this,MainActivity.class);
         startActivity(menu);
         finish();

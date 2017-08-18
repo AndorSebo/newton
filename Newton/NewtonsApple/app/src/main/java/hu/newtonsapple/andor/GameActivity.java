@@ -9,17 +9,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 import android.os.CountDownTimer;
-import android.os.Handler;
+import android.hardware.SensorEventListener;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,18 +32,18 @@ import hu.newtonsapple.andor.Classes.Alerts;
 import hu.newtonsapple.andor.Classes.Global;
 import hu.newtonsapple.andor.Classes.User;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements SensorEventListener{
     private int life = 3;
     private int point = 0;
     TextView lifeTV, pointTV, counter, heightScoreTV;
-    ImageView rightArrow, leftArrow, newton;
+    ImageView newton;
     AnimationDrawable animation;
     ObjectAnimator animator;
 
-    ImageView[] apples = new ImageView[10];
-    int height, width, fell, heightScore;
+    ImageView[] apples = new ImageView[11];
+    int height, width, fell, heightScore, stepSize;
     ObjectAnimator appleAnimator;
-    boolean finished = false;
+    boolean finished = false, gameover = false, paused = false;
     SharedPreferences prefs;
     CountDownTimer ct;
     final static int speed = 1100;
@@ -57,6 +57,11 @@ public class GameActivity extends AppCompatActivity {
         animation = (AnimationDrawable) newton.getDrawable();
         animation.stop();
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
+
+        SensorManager myManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor mySensor = myManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        myManager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         Global.setFullScreen(getWindow());
 
@@ -74,14 +79,14 @@ public class GameActivity extends AppCompatActivity {
 
         counter = (TextView) findViewById(R.id.counter);
 
-        rightArrow = (ImageView) findViewById(R.id.rightBtn);
-        leftArrow = (ImageView) findViewById(R.id.leftBtn);
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         height = size.y;
         width = size.x;
+        stepSize = size.x/100 - 10;
+        if (stepSize < 20)
+            stepSize +=20;
         fell = 0;
 
         heightScore = prefs.getInt("HeightScore",0);
@@ -90,27 +95,23 @@ public class GameActivity extends AppCompatActivity {
 
         ct = new CountDownTimer(4000, 500) {
             public void onTick(long millisUntilFinished) {
-                rightArrow.setEnabled(false);
-                leftArrow.setEnabled(false);
                 counter.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             public void onFinish() {
-                rightArrow.setEnabled(true);
-                leftArrow.setEnabled(true);
                 counter.setVisibility(View.GONE);
                 finished = true;
                 fallLot();
             }
         }.start();
-        inputListeners();
     }
 
     @Override
     public void onBackPressed() {
-        if (finished)
+        if (finished) {
+            paused = true;
             Alerts.alertToMenu(GameActivity.this, appleAnimator);
-        else {
+        }else {
             ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
             startActivity(menu);
@@ -122,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
         int[] sldAppleId = new int[2];
 
         for (int i = 0; i < apples.length; i++) {
-            int resID = getResources().getIdentifier("fall" + (i + 1), "id", getPackageName());
+            int resID = getResources().getIdentifier("fall" + i, "id", getPackageName());
             apples[i] = (ImageView) findViewById(resID);
         }
 
@@ -142,6 +143,7 @@ public class GameActivity extends AppCompatActivity {
                 sendScore(point);
             }
             Alerts.alertToEnd(GameActivity.this, point);
+            gameover = true;
         }
     }
 
@@ -240,72 +242,48 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void inputListeners(){
+    private void moveRight(){
+        if (!gameover) {
+            newton.setX(newton.getX()+stepSize);
+            newton.setScaleX(1f);
+            animation = (AnimationDrawable) newton.getDrawable();
+            animation.start();
+        }
+    }
+    private void stopRight(){
+        animation.selectDrawable(0);
+        animation.stop();
+        newton.setX(newton.getX());
+    }
+    private void moveLeft(){
+        if (!gameover) {
+            newton.setX(newton.getX()-stepSize);
+            newton.setScaleX(-1f);
+            animation = (AnimationDrawable) newton.getDrawable();
+            animation.start();
+        }
+    }
+    private void stopLeft(){
+        animation.stop();
+        animation.selectDrawable(0);
+        newton.setX(newton.getX());
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
-        rightArrow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        Log.d("INPUT","UP");
-                        leftArrow.setEnabled(true);
-                        animator.pause();
-                        animation.stop();
-                        animation.selectDrawable(0);
-                        break;
-                    case MotionEvent.ACTION_DOWN:
-                        Log.d("INPUT","DOWN");
-                        if (newton.getX() != height - (rightArrow.getWidth() / 3)) {
-                            leftArrow.setEnabled(false);
-                            animator = ObjectAnimator.ofFloat(newton, "x", height - (rightArrow.getWidth() / 3));
-                            animator.setInterpolator(new LinearInterpolator());
-                            newton.setScaleX(1f);
-                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
-                            animation = (AnimationDrawable) newton.getDrawable();
-                            animation.start();
-                            if (!animator.isPaused())
-                                animator.setDuration(speed).start();
-                            else
-                                animator.resume();
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
-
-        leftArrow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        Log.d("INPUT","UP");
-                        rightArrow.setEnabled(true);
-                        animator.pause();
-                        animation.stop();
-                        animation.selectDrawable(0);
-                        break;
-                    case MotionEvent.ACTION_DOWN:
-                        Log.d("INPUT","DOWN");
-                        rightArrow.setEnabled(false);
-                        if (newton.getX() != rightArrow.getWidth() / 10) {
-                            animator = ObjectAnimator.ofFloat(newton, "x", rightArrow.getWidth() / 10);
-                            animator.setInterpolator(new LinearInterpolator());
-                            newton.setScaleX(-1f);
-                            if(newton.getDrawable() != getResources().getDrawable(R.drawable.newton_dead)){
-                                animation = (AnimationDrawable) newton.getDrawable();
-                                animation.start();
-                                if (!animator.isPaused())
-                                    animator.setDuration(speed).start();
-                                else
-                                    animator.resume();
-                            }
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (finished && !gameover && !paused)
+            if (sensorEvent.values[1] < -0.85f)
+                moveRight();
+            else if(sensorEvent.values[1] > 0.85f)
+                moveLeft();
+            else{
+                stopLeft();
+                stopRight();
+            }
+
+    }
 }

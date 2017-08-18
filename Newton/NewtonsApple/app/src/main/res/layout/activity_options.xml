@@ -8,20 +8,35 @@
     android:background="@color/background"
     android:padding="16dp"
     android:orientation="vertical">
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
-    <TextView
-        android:text="@string/settings"
-        style="@style/textStyle"
-        android:textColor="@color/colorAccent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_back"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="@string/settings"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"/>
+
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#444444"/>
-</LinearLayout>
+</LinearLayout> <!-- Header -->
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -57,38 +72,5 @@
                 app:switchToggleNotCheckedColor="@color/button_text_color"/>
 
         </LinearLayout>
-
     </LinearLayout> <!-- Vibrate layout -->
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/controlTV"
-            android:text="@string/control"
-            style="@style/textStyle"
-            android:textColor="@color/colorAccent"
-            android:gravity="start"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_gravity="center">
-            <com.rm.rmswitch.RMSwitch
-                android:id="@+id/control"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:checked="false"
-                app:forceAspectRatio="false"
-                app:enabled="true"
-                app:switchDesign="large"
-                app:switchToggleCheckedImage="@drawable/ic_arrow"
-                app:switchToggleNotCheckedImage="@drawable/ic_rotate"
-                app:switchBkgCheckedColor="#5588BB"
-                app:switchBkgNotCheckedColor="#5588BB"
-                app:switchToggleCheckedColor="@color/button_text_color"
-                app:switchToggleNotCheckedColor="@color/button_text_color"/>
-        </LinearLayout>
-
-    </LinearLayout> <!-- Control layout -->
 </LinearLayout> <!-- Panels -->

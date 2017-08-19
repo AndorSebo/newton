@@ -1,6 +1,7 @@
 package hu.newtonsapple.andor;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,8 +34,9 @@ public class ToplistActivity extends AppCompatActivity {
     List<User> userList;
     ListView userListView;
     NewtonCradleLoading loading;
-    TextView loadingTV;
+    TextView loadingTV, toplistTV,nameTV,scoreTV;
     ImageView backArrow;
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class ToplistActivity extends AppCompatActivity {
         ViewGroup header = (ViewGroup)(getLayoutInflater()).inflate(R.layout.users_header, userListView, false);
         userListView.addHeaderView(header, null, false);
         backArrow = header.findViewById(R.id.backArrow);
+        toplistTV = header.findViewById(R.id.toplistTV);
+        nameTV = header.findViewById(R.id.nameTV);
+        scoreTV = header.findViewById(R.id.scoreTV);
+
+        TextView[] tvs = {nameTV,toplistTV,scoreTV};
+
+        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+        for (TextView tv : tvs) tv.setTypeface(tf);
+
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override

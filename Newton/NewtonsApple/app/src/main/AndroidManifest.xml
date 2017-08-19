@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="reverseLandscape" />
         <activity
             android:name=".OptionsActivity"
             android:screenOrientation="sensorLandscape" />

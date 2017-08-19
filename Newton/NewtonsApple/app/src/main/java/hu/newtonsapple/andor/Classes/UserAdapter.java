@@ -1,6 +1,7 @@
 package hu.newtonsapple.andor.Classes;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private Activity context;
     private List<User> userList;
+    Typeface tf;
 
     public UserAdapter(Activity context, List<User> userList) {
         super(context,R.layout.toplist_item,userList);
@@ -33,6 +35,11 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         TextView nameTV = listViewItem.findViewById(R.id.nameTV);
         TextView scoreTV = listViewItem.findViewById(R.id.scoreTV);
+
+
+        tf = Typeface.createFromAsset(context.getAssets(),"font.ttf");
+        nameTV.setTypeface(tf);
+        scoreTV.setTypeface(tf);
 
         User user = userList.get(position);
         nameTV.setText(String.valueOf(user.getName()));

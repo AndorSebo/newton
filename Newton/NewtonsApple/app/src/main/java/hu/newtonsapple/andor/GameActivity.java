@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
@@ -18,8 +20,11 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     boolean finished = false, gameover = false, paused = false;
     SharedPreferences prefs;
     CountDownTimer ct;
-    final static int speed = 1100;
+    final static int speed = 1500;
     DatabaseReference userReference;
 
     @Override
@@ -101,9 +106,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             public void onFinish() {
                 counter.setVisibility(View.GONE);
                 finished = true;
-                fallLot();
+                //fallLot();
             }
         }.start();
+        newton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                animator.pause();
+            }
+        });
     }
 
     @Override
@@ -243,31 +255,47 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void moveRight(){
-        if (!gameover) {
-            newton.setX(newton.getX()+stepSize);
+        if (newton.getX() != width-newton.getWidth()) {
+            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
+            animator.setInterpolator(null);
             newton.setScaleX(1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();
+            if (!animator.isPaused())
+                animator.setDuration(speed).start();
+            else
+                animator.resume();
         }
     }
+
     private void stopRight(){
+        if(animator != null && !animator.isPaused())
+            animator.pause();
         animation.selectDrawable(0);
         animation.stop();
-        newton.setX(newton.getX());
     }
+
     private void moveLeft(){
-        if (!gameover) {
-            newton.setX(newton.getX()-stepSize);
+        if (newton.getX() != 0) {
+            animator = ObjectAnimator.ofFloat(newton, "x", 0);
+            animator.setInterpolator(null);
             newton.setScaleX(-1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();
+            if (!animator.isPaused())
+                animator.setDuration(speed).start();
+            else
+                animator.resume();
         }
     }
+
     private void stopLeft(){
+        if(animator != null && !animator.isPaused())
+            animator.pause();
         animation.stop();
         animation.selectDrawable(0);
-        newton.setX(newton.getX());
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -276,9 +304,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (finished && !gameover && !paused)
-            if (sensorEvent.values[1] < -0.85f)
+            if (sensorEvent.values[1] < -1)
                 moveRight();
-            else if(sensorEvent.values[1] > 0.85f)
+            else if(sensorEvent.values[1] > 1)
                 moveLeft();
             else{
                 stopLeft();

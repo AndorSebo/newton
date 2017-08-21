@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/newton0" android:duration="75"/>
+    <item android:drawable="@drawable/newton_stop" android:duration="75"/>
     <item android:drawable="@drawable/newton1" android:duration="75"/>
     <item android:drawable="@drawable/newton2" android:duration="75"/>
     <item android:drawable="@drawable/newton3" android:duration="75"/>

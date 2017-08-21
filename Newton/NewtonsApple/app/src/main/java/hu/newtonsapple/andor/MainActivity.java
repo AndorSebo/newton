@@ -2,12 +2,11 @@ package hu.newtonsapple.andor;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton playButton, optionsButton, toplistButton;
     TextView name;
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             name.setText("Szia, "+prefs.getString("name","Játékos")+" jó játékot!");
         }
+        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+        name.setTypeface(tf);
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override

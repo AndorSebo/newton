@@ -1,5 +1,6 @@
 package hu.newtonsapple.andor.Classes;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -22,14 +23,18 @@ import hu.newtonsapple.andor.R;
 
 public class Alerts {
 
-    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator){
+    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set){
         SweetAlertDialog toMenu;
-        final boolean[] p = {true};
 
         if(appleAnimator != null && appleAnimator.isRunning())
             appleAnimator.pause();
         else if (appleAnimator != null)
             appleAnimator.resume();
+
+        if(set != null && set.isRunning())
+            set.pause();
+        else if (set != null)
+            set.resume();
 
         toMenu = new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
         toMenu.setTitleText("Biztosan ki szeretnél lépni?");
@@ -51,6 +56,9 @@ public class Alerts {
                     public void onClick(SweetAlertDialog sDialog) {
                         if(appleAnimator != null){
                             appleAnimator.resume();
+                        }
+                        if(set != null){
+                            set.resume();
                         }
                         sDialog.dismissWithAnimation();
                     }

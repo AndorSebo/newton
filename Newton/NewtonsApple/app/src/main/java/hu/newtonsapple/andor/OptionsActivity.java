@@ -3,12 +3,12 @@ package hu.newtonsapple.andor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +19,9 @@ import hu.newtonsapple.andor.Classes.Global;
 public class OptionsActivity extends AppCompatActivity {
 
     RMSwitch vibrate;
-    TextView tabletTV, vibrateTV;
+    TextView tabletTV, vibrateTV, title;
     ImageView backArrow;
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,12 @@ public class OptionsActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = prefs.edit();
         vibrate = (RMSwitch) findViewById(R.id.vibrate);
         tabletTV = (TextView) findViewById(R.id.tabletTV);
+        title = (TextView) findViewById(R.id.settings_title);
         vibrateTV = (TextView) findViewById(R.id.vibrateTV);
         backArrow = (ImageView) findViewById(R.id.backArrow);
+        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+        TextView[] tvs = {vibrateTV,tabletTV,title};
+        for (TextView tv : tvs) tv.setTypeface(tf);
 
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
 

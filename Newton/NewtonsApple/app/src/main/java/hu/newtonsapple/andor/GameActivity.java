@@ -2,14 +2,14 @@ package hu.newtonsapple.andor;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,13 +18,11 @@ import android.os.CountDownTimer;
 import android.hardware.SensorEventListener;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,8 +49,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     boolean finished = false, gameover = false, paused = false;
     SharedPreferences prefs;
     CountDownTimer ct;
-    final static int speed = 1500;
+    final static int appleSpeed = 1100;
+    final static int userSpeed = 4000;
     DatabaseReference userReference;
+    Typeface tf;
+    AnimatorSet set = new AnimatorSet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         SensorManager myManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor mySensor = myManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+
 
         myManager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -97,6 +101,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         heightScore = prefs.getInt("HeightScore",0);
 
         heightScoreTV.setText(String.valueOf(heightScore));
+        TextView[] tvs = {lifeTV,pointTV,heightScoreTV, counter};
+        for (TextView tv : tvs) tv.setTypeface(tf);
 
         ct = new CountDownTimer(4000, 500) {
             public void onTick(long millisUntilFinished) {
@@ -106,7 +112,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             public void onFinish() {
                 counter.setVisibility(View.GONE);
                 finished = true;
-                //fallLot();
+                fallLot();
             }
         }.start();
         newton.setOnClickListener(new View.OnClickListener() {
@@ -116,13 +122,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 animator.pause();
             }
         });
+
+
     }
 
     @Override
     public void onBackPressed() {
         if (finished) {
-            paused = true;
-            Alerts.alertToMenu(GameActivity.this, appleAnimator);
+            Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
         }else {
             ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
@@ -174,7 +181,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             apple.setBackgroundResource(R.drawable.ic_apple);
 
         appleAnimator = ObjectAnimator.ofFloat(apple, "y", height);
-        appleAnimator.setDuration(rn.nextInt(200) + speed).start();
+        appleAnimator.setDuration(rn.nextInt(200) + appleSpeed).start();
         final boolean[] collided = {false};
         appleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -256,21 +263,30 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private void moveRight(){
         if (newton.getX() != width-newton.getWidth()) {
+            animator = new ObjectAnimator();
             animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
-            animator.setInterpolator(null);
+            animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();
-            if (!animator.isPaused())
-                animator.setDuration(speed).start();
-            else
-                animator.resume();
+            set.setDuration(userSpeed);
+            set.play(animator);
+            if(set.isStarted()) {
+                set.resume();
+            }else if(set.isPaused()){
+                set.end();
+                set.play(animator);
+                set.start();
+            }
+            else{
+                set.start();
+            }
         }
     }
 
-    private void stopRight(){
-        if(animator != null && !animator.isPaused())
-            animator.pause();
+    private void animatorStop(){
+        set.cancel();
+        set.setupStartValues();
         animation.selectDrawable(0);
         animation.stop();
     }
@@ -278,24 +294,24 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private void moveLeft(){
         if (newton.getX() != 0) {
             animator = ObjectAnimator.ofFloat(newton, "x", 0);
-            animator.setInterpolator(null);
+            animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(-1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();
-            if (!animator.isPaused())
-                animator.setDuration(speed).start();
-            else
-                animator.resume();
+            set.setDuration(userSpeed);
+            set.play(animator);
+            if(set.isStarted()) {
+                set.resume();
+            }else if(set.isPaused()){
+                set.end();
+                set.play(animator);
+                set.start();
+            }
+            else{
+                set.start();
+            }
         }
     }
-
-    private void stopLeft(){
-        if(animator != null && !animator.isPaused())
-            animator.pause();
-        animation.stop();
-        animation.selectDrawable(0);
-    }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -304,13 +320,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (finished && !gameover && !paused)
-            if (sensorEvent.values[1] < -1)
+            if (sensorEvent.values[1] < -0.9)
                 moveRight();
-            else if(sensorEvent.values[1] > 1)
+            else if(sensorEvent.values[1] > 0.9)
                 moveLeft();
             else{
-                stopLeft();
-                stopRight();
+                if (animator != null)
+                    animatorStop();
             }
 
     }

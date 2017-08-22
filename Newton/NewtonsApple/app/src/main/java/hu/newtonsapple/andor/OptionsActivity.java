@@ -14,14 +14,17 @@ import android.widget.TextView;
 
 import com.rm.rmswitch.RMSwitch;
 
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+
 import hu.newtonsapple.andor.Classes.Global;
 
 public class OptionsActivity extends AppCompatActivity {
 
     RMSwitch vibrate;
-    TextView tabletTV, vibrateTV, title;
+    TextView tabletTV, vibrateTV, title, sensTV;
     ImageView backArrow;
     Typeface tf;
+    DiscreteSeekBar sensBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +36,17 @@ public class OptionsActivity extends AppCompatActivity {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = prefs.edit();
+
         vibrate = (RMSwitch) findViewById(R.id.vibrate);
         tabletTV = (TextView) findViewById(R.id.tabletTV);
         title = (TextView) findViewById(R.id.settings_title);
         vibrateTV = (TextView) findViewById(R.id.vibrateTV);
+        sensTV = (TextView) findViewById(R.id.sensTV);
         backArrow = (ImageView) findViewById(R.id.backArrow);
+        sensBar = (DiscreteSeekBar) findViewById(R.id.sensBar);
+
         tf = Typeface.createFromAsset(getAssets(),"font.ttf");
-        TextView[] tvs = {vibrateTV,tabletTV,title};
+        TextView[] tvs = {vibrateTV,tabletTV,title,sensTV};
         for (TextView tv : tvs) tv.setTypeface(tf);
 
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
@@ -65,13 +72,31 @@ public class OptionsActivity extends AppCompatActivity {
             vibrate.setClickable(false);
             vibrateTV.setEnabled(false);
         }
-
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BackToMenu();
             }
         });
+        sensBar.setProgress(prefs.getInt("sensValue",1));
+
+        sensBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+                editor.putInt("sensValue",value).commit();
+            }
+            @Override
+            public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+        });
+
+
     }
     @Override
     public void onBackPressed() {

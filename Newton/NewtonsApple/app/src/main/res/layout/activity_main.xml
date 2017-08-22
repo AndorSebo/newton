@@ -1,62 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="hu.newtonsapple.andor.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hu.newtonsapple.andor.MainActivity"
-    android:background="@color/background"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:background="@drawable/background">
 
     <ImageView
-        android:id="@+id/newton"
+        android:id="@+id/background_one"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/newton"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:src="@drawable/background_menu"
+        android:scaleY="1.105"
+        android:scaleX="1.105"/>
+
+    <ImageView
+        android:id="@+id/background_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background_menu"
+        android:scaleY="1.105"
+        android:scaleX="1.105"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="8dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:src="@drawable/logo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_weight="1">
-        <ImageButton
-            android:id="@+id/playButton"
-            style="@style/menu_button"
-            android:src="@drawable/ic_play"/>
-        <ImageButton
-            android:id="@+id/optionsButton"
-            style="@style/menu_button"
-            android:src="@drawable/ic_settings"/>
-        <ImageButton
-            android:id="@+id/creditsButton"
-            style="@style/menu_button"
-            android:src="@drawable/toplist"/>
+            android:orientation="horizontal">
 
-            </LinearLayout>
-        <TextView
-            android:id="@+id/name"
+            <ImageButton
+                android:id="@+id/playButton"
+                style="@style/menu_button"
+                android:src="@drawable/ic_play" />
+
+            <ImageButton
+                android:id="@+id/optionsButton"
+                style="@style/menu_button"
+                android:src="@drawable/ic_settings" />
+
+            <ImageButton
+                android:id="@+id/creditsButton"
+                style="@style/menu_button"
+                android:src="@drawable/toplist" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#880000"
-            android:textStyle="bold"
-            android:gravity="bottom|end"/>
-    </LinearLayout>
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/info"
+                style="@style/menu_button"
+                android:layout_gravity="start"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/info"
+                />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="end"
+                android:textColor="#510001"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
+</FrameLayout>
 
-</LinearLayout>

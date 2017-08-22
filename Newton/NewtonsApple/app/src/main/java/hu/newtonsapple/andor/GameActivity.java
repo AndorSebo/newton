@@ -38,12 +38,13 @@ import hu.newtonsapple.andor.Classes.User;
 public class GameActivity extends AppCompatActivity implements SensorEventListener{
     private int life = 3;
     private int point = 0;
+    private double sens = 0.1;
     TextView lifeTV, pointTV, counter, heightScoreTV;
     ImageView newton;
     AnimationDrawable animation;
     ObjectAnimator animator;
 
-    ImageView[] apples = new ImageView[11];
+    ImageView[] apples = new ImageView[14];
     int height, width, fell, heightScore, stepSize;
     ObjectAnimator appleAnimator;
     boolean finished = false, gameover = false, paused = false;
@@ -68,7 +69,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         Sensor mySensor = myManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         tf = Typeface.createFromAsset(getAssets(),"font.ttf");
-
 
         myManager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -99,6 +99,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         fell = 0;
 
         heightScore = prefs.getInt("HeightScore",0);
+        sens = prefs.getInt("sensValue",1)/10;
 
         heightScoreTV.setText(String.valueOf(heightScore));
         TextView[] tvs = {lifeTV,pointTV,heightScoreTV, counter};
@@ -115,15 +116,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 fallLot();
             }
         }.start();
-        newton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                animator.pause();
-            }
-        });
-
-
     }
 
     @Override
@@ -320,9 +312,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (finished && !gameover && !paused)
-            if (sensorEvent.values[1] < -0.9)
+            if (sensorEvent.values[1] < -1+sens)
                 moveRight();
-            else if(sensorEvent.values[1] > 0.9)
+            else if(sensorEvent.values[1] > 1-sens)
                 moveLeft();
             else{
                 if (animator != null)

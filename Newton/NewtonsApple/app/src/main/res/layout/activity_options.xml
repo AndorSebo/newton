@@ -74,4 +74,28 @@
 
         </LinearLayout>
     </LinearLayout> <!-- Vibrate layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/sensTV"
+            style="@style/textStyle"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="@string/sens"
+            android:layout_weight="1"/>
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/sensBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:dsb_min="1"
+            app:dsb_max="8"
+            app:dsb_progressColor="#FFFFFF"
+            app:dsb_trackColor="@color/red_btn_bg_color"
+            app:dsb_trackHeight="5dp"
+            app:dsb_rippleColor="#FFFFFF"
+            app:dsb_indicatorColor="@color/red_btn_bg_color"/>
+    </LinearLayout> <!-- Input sensitivity -->
 </LinearLayout> <!-- Panels -->

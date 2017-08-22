@@ -102,6 +102,23 @@
             <ImageView
                 android:id="@+id/fall10"
                 style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall11"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall12"
+                style="@style/appleStyle" />
+
+            <ImageView
+                android:id="@+id/fall13"
+                style="@style/appleStyle" />
+            <ImageView
+                android:id="@+id/fall14"
+                style="@style/appleStyle" />
+
+
         </LinearLayout>
 
         <LinearLayout

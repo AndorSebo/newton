@@ -14,4 +14,5 @@
     <string name="toplist">Toplista</string>
     <string name="loading">Betöltés…</string>
     <string name="control">Irányítás</string>
+    <string name="sens">Érzékenység</string>
 </resources>

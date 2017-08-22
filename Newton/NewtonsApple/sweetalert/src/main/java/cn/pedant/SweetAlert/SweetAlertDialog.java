@@ -3,6 +3,7 @@ package cn.pedant.SweetAlert;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     public static final int CUSTOM_IMAGE_TYPE = 4;
     public static final int PROGRESS_TYPE = 5;
     public static final int INPUT_TYPE = 6;
+
+    Typeface tf;
 
     public static interface OnSweetClickListener {
         public void onClick (SweetAlertDialog sweetAlertDialog);
@@ -158,6 +161,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mConfirmButton.setOnClickListener(this);
         mCancelButton.setOnClickListener(this);
         name = findViewById(R.id.name);
+
 
         setTitleText(mTitleText);
         setContentText(mContentText);

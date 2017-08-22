@@ -35,7 +35,7 @@ public class ToplistActivity extends AppCompatActivity {
     ListView userListView;
     NewtonCradleLoading loading;
     TextView loadingTV, toplistTV,nameTV,scoreTV;
-    ImageView backArrow;
+    ImageView backArrowHeader, backArrow;
     Typeface tf;
 
     @Override
@@ -50,7 +50,8 @@ public class ToplistActivity extends AppCompatActivity {
         userListView = (ListView) findViewById(R.id.userListView);
         ViewGroup header = (ViewGroup)(getLayoutInflater()).inflate(R.layout.users_header, userListView, false);
         userListView.addHeaderView(header, null, false);
-        backArrow = header.findViewById(R.id.backArrow);
+        backArrowHeader = header.findViewById(R.id.backArrow);
+        backArrow = (ImageView) findViewById(R.id.backArrow);
         toplistTV = header.findViewById(R.id.toplistTV);
         nameTV = header.findViewById(R.id.nameTV);
         scoreTV = header.findViewById(R.id.scoreTV);
@@ -61,6 +62,12 @@ public class ToplistActivity extends AppCompatActivity {
         for (TextView tv : tvs) tv.setTypeface(tf);
 
 
+        backArrowHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BackToMenu();
+            }
+        });
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +78,7 @@ public class ToplistActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         loading = (NewtonCradleLoading) findViewById(R.id.loader);
         loading.setVisibility(View.VISIBLE);
+        backArrow.setVisibility(View.VISIBLE);
         loading.start();
     }
 
@@ -100,6 +108,7 @@ public class ToplistActivity extends AppCompatActivity {
                 loadingTV.setVisibility(View.GONE);
                 loading.stop();
                 loading.setVisibility(View.GONE);
+                backArrow.setVisibility(View.GONE);
                 userListView.setAdapter(adapter);
             }
             @Override

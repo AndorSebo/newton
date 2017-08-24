@@ -9,7 +9,6 @@ Az alkalmazásról:
 
 Ez az alkalmazás a 2017-es Kutatók Éjszakája nevű eseményre kiírt versenyre készült.
 Az alkalmazás szabadon terjeszthető, értékesítése a fejlesztő beleegyezése nélkül tilos!
-A felhasznált képanyag jogai nem a fejlesztőt illetik meg, így azok felhasználásához
-nem kötelező egyeztetni a készítővel.
+A felhasznált képanyag jogai nem a fejlesztőt illetik meg, így azok felhasználásához nem kötelező egyeztetni a készítővel.
 
-Készítette: Sebő Andor Lajos, Eger 2017
+Készítette: Sebő Andor Lajos, Eger 2017.

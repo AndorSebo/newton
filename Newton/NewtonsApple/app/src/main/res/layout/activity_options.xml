@@ -78,24 +78,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="32dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
-            android:id="@+id/sensTV"
+            android:id="@+id/inputTV"
             style="@style/textStyle"
             android:layout_width="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="@string/sens"
-            android:layout_weight="1"/>
-        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
-            android:id="@+id/sensBar"
-            android:layout_width="200dp"
+            android:text="@string/input"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/arrows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arrows"
+                android:textSize="24sp"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/sensor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sensor"
+                android:textSize="24sp"
+                android:paddingTop="8dp"/>
+
+        </RadioGroup>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dsb_min="1"
-            app:dsb_max="8"
-            app:dsb_progressColor="#FFFFFF"
-            app:dsb_trackColor="@color/red_btn_bg_color"
-            app:dsb_trackHeight="5dp"
-            app:dsb_rippleColor="#FFFFFF"
-            app:dsb_indicatorColor="@color/red_btn_bg_color"/>
-    </LinearLayout> <!-- Input sensitivity -->
+            android:orientation="vertical"
+            android:gravity="end">
+            <TextView
+                android:id="@+id/sensTV"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="@string/sens"
+                android:layout_weight="1"/>
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/sensBar"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                app:dsb_min="1"
+                app:dsb_max="8"
+                app:dsb_progressColor="#FFFFFF"
+                app:dsb_trackColor="@color/red_btn_bg_color"
+                app:dsb_trackHeight="5dp"
+                app:dsb_rippleColor="#FFFFFF"
+                app:dsb_indicatorColor="@color/red_btn_bg_color"/>
+        </LinearLayout> <!-- Input sensitivity -->
+    </LinearLayout> <!-- Input layout -->
 </LinearLayout> <!-- Panels -->

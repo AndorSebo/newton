@@ -23,6 +23,7 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,15 +57,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     DatabaseReference userReference;
     Typeface tf;
     AnimatorSet set = new AnimatorSet();
-    MediaPlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        mPlayer = MediaPlayer.create(GameActivity.this, R.raw.music);
-        mPlayer.start();
 
         newton = (ImageView) findViewById(R.id.newton);
         animation = (AnimationDrawable) newton.getDrawable();
@@ -127,7 +124,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onBackPressed() {
         if (finished) {
-            Alerts.alertToMenu(GameActivity.this, appleAnimator, set, mPlayer);
+            Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
         }else {
             ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
@@ -160,7 +157,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 sendScore(point);
             }
             Alerts.alertToEnd(GameActivity.this, point);
-            mPlayer.stop();
             gameover = true;
         }
     }
@@ -317,24 +313,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    protected void onResume() {
-        mPlayer.start();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        mPlayer.pause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onUserLeaveHint(){
-        mPlayer.stop();
-        super.onUserLeaveHint();
-    }
-
-    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (finished && !gameover && !paused)
             if (sensorEvent.values[1] < -1+sens)
@@ -346,5 +324,21 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     animatorStop();
             }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_POWER) {
+            if (finished) {
+                Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
+            }else {
+                ct.cancel();
+                Intent menu = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(menu);
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

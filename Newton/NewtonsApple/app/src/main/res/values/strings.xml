@@ -15,4 +15,7 @@
     <string name="loading">Betöltés…</string>
     <string name="control">Irányítás</string>
     <string name="sens">Érzékenység</string>
+    <string name="input">Irányítás</string>
+    <string name="arrows">Nyilak</string>
+    <string name="sensor">Döntés</string>
 </resources>

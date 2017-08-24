@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.rm.rmswitch.RMSwitch;
@@ -21,10 +22,11 @@ import hu.newtonsapple.andor.Classes.Global;
 public class OptionsActivity extends AppCompatActivity {
 
     RMSwitch vibrate;
-    TextView tabletTV, vibrateTV, title, sensTV;
+    TextView tabletTV, vibrateTV, title, sensTV, inputTV;
     ImageView backArrow;
     Typeface tf;
     DiscreteSeekBar sensBar;
+    RadioButton arrows,sensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,17 @@ public class OptionsActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.settings_title);
         vibrateTV = (TextView) findViewById(R.id.vibrateTV);
         sensTV = (TextView) findViewById(R.id.sensTV);
+        inputTV = (TextView) findViewById(R.id.inputTV);
         backArrow = (ImageView) findViewById(R.id.backArrow);
         sensBar = (DiscreteSeekBar) findViewById(R.id.sensBar);
 
+        arrows = (RadioButton) findViewById(R.id.arrows);
+        sensor = (RadioButton) findViewById(R.id.sensor);
         tf = Typeface.createFromAsset(getAssets(),"font.ttf");
-        TextView[] tvs = {vibrateTV,tabletTV,title,sensTV};
+        TextView[] tvs = {vibrateTV,tabletTV,title,sensTV, inputTV};
         for (TextView tv : tvs) tv.setTypeface(tf);
+        arrows.setTypeface(tf);
+        sensor.setTypeface(tf);
 
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
 

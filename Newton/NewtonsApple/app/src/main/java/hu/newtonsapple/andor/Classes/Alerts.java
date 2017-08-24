@@ -24,7 +24,7 @@ import hu.newtonsapple.andor.R;
 
 public class Alerts {
 
-    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set, final MediaPlayer mPlayer){
+    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set){
         SweetAlertDialog toMenu;
 
         if(appleAnimator != null && appleAnimator.isRunning())
@@ -48,7 +48,6 @@ public class Alerts {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         Intent menu = new Intent(context ,MainActivity.class);
-                        mPlayer.stop();
                         context.startActivity(menu);
                         ((Activity)context).finish();
                     }

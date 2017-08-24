@@ -14,6 +14,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.hardware.SensorEventListener;
 import android.os.Vibrator;
@@ -55,11 +56,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     DatabaseReference userReference;
     Typeface tf;
     AnimatorSet set = new AnimatorSet();
+    MediaPlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        mPlayer = MediaPlayer.create(GameActivity.this, R.raw.music);
+        mPlayer.start();
+
         newton = (ImageView) findViewById(R.id.newton);
         animation = (AnimationDrawable) newton.getDrawable();
         animation.stop();
@@ -121,7 +127,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onBackPressed() {
         if (finished) {
-            Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
+            Alerts.alertToMenu(GameActivity.this, appleAnimator, set, mPlayer);
         }else {
             ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
@@ -154,6 +160,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 sendScore(point);
             }
             Alerts.alertToEnd(GameActivity.this, point);
+            mPlayer.stop();
             gameover = true;
         }
     }
@@ -307,6 +314,24 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        mPlayer.start();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mPlayer.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onUserLeaveHint(){
+        mPlayer.stop();
+        super.onUserLeaveHint();
     }
 
     @Override

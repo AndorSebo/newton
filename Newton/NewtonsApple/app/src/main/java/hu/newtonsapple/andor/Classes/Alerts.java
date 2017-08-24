@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,7 +24,7 @@ import hu.newtonsapple.andor.R;
 
 public class Alerts {
 
-    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set){
+    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set, final MediaPlayer mPlayer){
         SweetAlertDialog toMenu;
 
         if(appleAnimator != null && appleAnimator.isRunning())
@@ -47,6 +48,7 @@ public class Alerts {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         Intent menu = new Intent(context ,MainActivity.class);
+                        mPlayer.stop();
                         context.startActivity(menu);
                         ((Activity)context).finish();
                     }

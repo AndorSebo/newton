@@ -18,7 +18,7 @@ import hu.newtonsapple.andor.Classes.Global;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton playButton, optionsButton, toplistButton;
+    ImageButton playButton, optionsButton, toplistButton, infoButton;
     TextView name;
     Typeface tf;
     ImageView backgroundOne, backgroundTwo;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = (ImageButton) findViewById(R.id.playButton);
         optionsButton = (ImageButton) findViewById(R.id.optionsButton);
         toplistButton = (ImageButton) findViewById(R.id.creditsButton);
+        infoButton = (ImageButton) findViewById(R.id.info);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent toplist = new Intent(MainActivity.this, ToplistActivity.class);
                 startActivity(toplist);
+                finish();
+            }
+        });
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent info = new Intent(MainActivity.this, InfoActivity.class);
+                startActivity(info);
                 finish();
             }
         });

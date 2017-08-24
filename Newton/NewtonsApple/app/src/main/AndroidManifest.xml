@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:name=".Classes.Multidex"
         android:allowBackup="true"
@@ -17,13 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        tools:replace="android:icon" >
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,9 +30,13 @@
             android:screenOrientation="reverseLandscape" />
         <activity
             android:name=".OptionsActivity"
-            android:screenOrientation="sensorLandscape" />
-        <activity android:name=".ToplistActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".ToplistActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".InfoActivity"
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>

@@ -70,8 +70,7 @@
                 android:layout_gravity="start"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/info"
-                />
+                android:src="@drawable/info"/>
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"

@@ -8,7 +8,9 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -56,6 +58,36 @@ public class OptionsActivity extends AppCompatActivity {
         arrows.setTypeface(tf);
         sensor.setTypeface(tf);
 
+        Log.d("inputType",prefs.getString("inputType","Arrows"));
+
+        if(prefs.getString("inputType","Arrows").equals("Arrows")) {
+            arrows.setChecked(true);
+            sensTV.setEnabled(false);
+            sensBar.setEnabled(false);
+        }else{
+            sensor.setChecked(true);
+            sensTV.setEnabled(true);
+            sensBar.setEnabled(true);
+        }
+        arrows.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putString("inputType","Arrows");
+                editor.apply();
+                sensTV.setEnabled(false);
+                sensBar.setEnabled(false);
+            }
+        });
+        sensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putString("inputType","Sensor");
+                editor.apply();
+                sensTV.setEnabled(true);
+                sensBar.setEnabled(true);
+            }
+        });
+
         vibrate.setChecked(prefs.getBoolean("vibrate", false));
 
         vibrate.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +95,11 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(vibrate.isChecked()){
                     editor.putBoolean("vibrate", false);
-                    editor.commit();
+                    editor.apply();
                     vibrate.setChecked(prefs.getBoolean("vibrate", false));
                 }else{
                     editor.putBoolean("vibrate", true);
-                    editor.commit();
+                    editor.apply();
                     vibrate.setChecked(prefs.getBoolean("vibrate", false));
                 }
             }

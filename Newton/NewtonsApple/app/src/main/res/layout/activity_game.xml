@@ -6,17 +6,15 @@
     tools:context="hu.newtonsapple.andor.GameActivity"
     android:background="@drawable/background"
     android:orientation="horizontal">
-
-
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="8dp">
             <LinearLayout
@@ -30,6 +28,18 @@
                 <TextView
                     android:id="@+id/heartTV"
                     style="@style/textStyle"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|start">
+
+                <ImageView
+                    android:id="@+id/leftArrow"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/leftarrow"/>
+
             </LinearLayout>
         </LinearLayout>
 
@@ -50,6 +60,62 @@
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:paddingBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_gravity="end">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_apple" />
+
+                <TextView
+                    android:id="@+id/pointTV"
+                    style="@style/textStyle"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_crown" />
+
+                <TextView
+                    android:id="@+id/heightTV"
+                    style="@style/textStyle"
+                    android:layout_gravity="end" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end">
+
+                <ImageView
+                    android:id="@+id/rightArrow"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/rightarrow"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/apples"
@@ -114,6 +180,7 @@
             <ImageView
                 android:id="@+id/fall13"
                 style="@style/appleStyle" />
+
             <ImageView
                 android:id="@+id/fall14"
                 style="@style/appleStyle" />
@@ -121,52 +188,5 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_gravity="end">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_apple" />
-
-                <TextView
-                    android:id="@+id/pointTV"
-                    style="@style/textStyle"
-                    android:layout_gravity="end"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_crown" />
-
-                <TextView
-                    android:id="@+id/heightTV"
-                    style="@style/textStyle"
-                    android:layout_gravity="end" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
     </FrameLayout>
-
-
 </LinearLayout>

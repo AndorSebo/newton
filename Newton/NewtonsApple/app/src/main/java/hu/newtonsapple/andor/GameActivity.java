@@ -14,7 +14,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.hardware.SensorEventListener;
 import android.os.Vibrator;
@@ -23,8 +22,9 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,14 +42,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private int point = 0;
     private double sens = 0.1;
     TextView lifeTV, pointTV, counter, heightScoreTV;
-    ImageView newton;
+    ImageView newton,rightArrow,leftArrow;
     AnimationDrawable animation;
-    ObjectAnimator animator;
+    ObjectAnimator animator, appleAnimator;
 
     ImageView[] apples = new ImageView[14];
     int height, width, fell, heightScore, stepSize;
-    ObjectAnimator appleAnimator;
-    boolean finished = false, gameover = false, paused = false;
+    boolean finished = false, gameover = false, paused = false, arrows;
     SharedPreferences prefs;
     CountDownTimer ct;
     final static int appleSpeed = 1100;
@@ -82,6 +81,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         lifeTV = (TextView) findViewById(R.id.heartTV);
         lifeTV.setText(String.valueOf(life));
 
+        leftArrow = (ImageView) findViewById(R.id.leftArrow);
+        rightArrow  = (ImageView) findViewById(R.id.rightArrow);
+
+        inputArrows();
+
         userReference = FirebaseDatabase.getInstance().getReference("users");
 
         pointTV = (TextView) findViewById(R.id.pointTV);
@@ -101,6 +105,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             stepSize +=20;
         fell = 0;
 
+        if(prefs.getString("inputType","Arrows").equals("Arrows")){
+            rightArrow.setVisibility(View.VISIBLE);
+            leftArrow.setVisibility(View.VISIBLE);
+            arrows = true;
+        }else{
+            rightArrow.setVisibility(View.GONE);
+            leftArrow.setVisibility(View.GONE);
+            arrows = false;
+        }
+
         heightScore = prefs.getInt("HeightScore",0);
         sens = prefs.getInt("sensValue",1)/10;
 
@@ -119,6 +133,71 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 fallLot();
             }
         }.start();
+    }
+
+    private void inputArrows(){
+        rightArrow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        leftArrow.setEnabled(true);
+                        animator.pause();
+                        animation.stop();
+                        animation.selectDrawable(0);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (newton.getX() != width-newton.getWidth()) {
+                            leftArrow.setEnabled(false);
+                            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
+                            animator.setInterpolator(new LinearOutSlowInInterpolator());
+                            newton.setScaleX(1f);
+                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
+                            animation = (AnimationDrawable) newton.getDrawable();
+                            animation.start();
+                            if (!animator.isPaused())
+                                animator.setDuration(userSpeed).start();
+                            else
+                                animator.resume();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+        leftArrow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        rightArrow.setEnabled(true);
+                        animator.pause();
+                        animation.stop();
+                        animation.selectDrawable(0);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        rightArrow.setEnabled(false);
+                        if (newton.getX() != width-newton.getWidth()) {
+                            rightArrow.setEnabled(false);
+                            animator = ObjectAnimator.ofFloat(newton, "x", 0);
+                            animator.setInterpolator(new LinearOutSlowInInterpolator());
+                            newton.setScaleX(-1f);
+                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
+                            animation = (AnimationDrawable) newton.getDrawable();
+                            animation.start();
+                            if (!animator.isPaused())
+                                animator.setDuration(userSpeed).start();
+                            else
+                                animator.resume();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+
     }
 
     @Override
@@ -258,7 +337,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private void moveRight(){
         if (newton.getX() != width-newton.getWidth()) {
-            animator = new ObjectAnimator();
             animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
             animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(1f);
@@ -280,14 +358,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void animatorStop(){
-        set.cancel();
         set.setupStartValues();
+        set.cancel();
         animation.selectDrawable(0);
         animation.stop();
     }
 
     private void moveLeft(){
         if (newton.getX() != 0) {
+            if (!set.isStarted())
+                set.end();
             animator = ObjectAnimator.ofFloat(newton, "x", 0);
             animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(-1f);
@@ -314,7 +394,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (finished && !gameover && !paused)
+        if (finished && !gameover && !paused && !arrows)
             if (sensorEvent.values[1] < -1+sens)
                 moveRight();
             else if(sensorEvent.values[1] > 1-sens)
@@ -324,21 +404,5 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     animatorStop();
             }
 
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_POWER) {
-            if (finished) {
-                Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
-            }else {
-                ct.cancel();
-                Intent menu = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(menu);
-                finish();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

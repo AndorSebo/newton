@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         Global.setFullScreen(getWindow());
 
+
+
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = prefs.edit();
         backgroundOne = (ImageView) findViewById(R.id.background_one);
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     @Override

@@ -18,4 +18,5 @@
     <string name="input">Irányítás</string>
     <string name="arrows">Nyilak</string>
     <string name="sensor">Döntés</string>
+    <string name="sens_warning">Ez a funkció még hibás lehet!</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.onurciner.toastox.ToastOX;
 import com.rm.rmswitch.RMSwitch;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
@@ -83,6 +84,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 editor.putString("inputType","Sensor");
                 editor.apply();
+                ToastOX.warning(OptionsActivity.this,getResources().getString(R.string.sens_warning),1200);
                 sensTV.setEnabled(true);
                 sensBar.setEnabled(true);
             }

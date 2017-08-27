@@ -44,7 +44,6 @@ public class ToplistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_toplist);
         Global.setFullScreen(getWindow());
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
-        userReference = FirebaseDatabase.getInstance().getReference("users");
         loadingTV = (TextView) findViewById(R.id.loadingTV);
 
         userListView = (ListView) findViewById(R.id.userListView);
@@ -57,10 +56,12 @@ public class ToplistActivity extends AppCompatActivity {
         scoreTV = header.findViewById(R.id.scoreTV);
 
         TextView[] tvs = {nameTV,toplistTV,scoreTV};
+        loading = (NewtonCradleLoading) findViewById(R.id.loader);
+        backArrow.setVisibility(View.VISIBLE);
+        userList = new ArrayList<>();
 
         tf = Typeface.createFromAsset(getAssets(),"font.ttf");
         for (TextView tv : tvs) tv.setTypeface(tf);
-
 
         backArrowHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,46 +76,51 @@ public class ToplistActivity extends AppCompatActivity {
             }
         });
 
-        userList = new ArrayList<>();
-        loading = (NewtonCradleLoading) findViewById(R.id.loader);
-        loading.setVisibility(View.VISIBLE);
-        backArrow.setVisibility(View.VISIBLE);
-        loading.start();
+
+        if (Global.isNetwork(getBaseContext())){
+            userReference = FirebaseDatabase.getInstance().getReference("users");
+            loading.setVisibility(View.VISIBLE);
+            loading.start();
+        }else{
+            loadingTV.setText(getResources().getString(R.string.network_nf));
+            loading.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if (userReference != null)
+            userReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                userList.clear();
+                    userList.clear();
 
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                        User u = userSnapshot.getValue(User.class);
-                    userList.add(u);
-                }
-                //RENDEZÉS
-                Collections.sort(userList, new Comparator<User>() {
-                    @Override
-                    public int compare(User lhs, User rhs) {
-                        return ((Integer)lhs.getPoint()).compareTo(rhs.getPoint());
+                    for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            User u = userSnapshot.getValue(User.class);
+                        userList.add(u);
                     }
-                });
-                Collections.reverse(userList);
+                    //RENDEZÉS
+                    Collections.sort(userList, new Comparator<User>() {
+                        @Override
+                        public int compare(User lhs, User rhs) {
+                            return ((Integer)lhs.getPoint()).compareTo(rhs.getPoint());
+                        }
+                    });
+                    Collections.reverse(userList);
 
-                UserAdapter adapter = new UserAdapter(ToplistActivity.this,userList);
-                loadingTV.setVisibility(View.GONE);
-                loading.stop();
-                loading.setVisibility(View.GONE);
-                backArrow.setVisibility(View.GONE);
-                userListView.setAdapter(adapter);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                    UserAdapter adapter = new UserAdapter(ToplistActivity.this,userList);
+                    loadingTV.setVisibility(View.GONE);
+                    loading.stop();
+                    loading.setVisibility(View.GONE);
+                    backArrow.setVisibility(View.GONE);
+                    userListView.setAdapter(adapter);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
     }
 
     @Override

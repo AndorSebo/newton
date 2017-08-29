@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton playButton, optionsButton, toplistButton, infoButton;
     TextView name;
     Typeface tf;
-    ImageView backgroundOne, backgroundTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +29,8 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.scale_from_corner, R.anim.scale_to_corner);
 
         Global.setFullScreen(getWindow());
-
-
-
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = prefs.edit();
-        backgroundOne = (ImageView) findViewById(R.id.background_one);
-        backgroundTwo = (ImageView) findViewById(R.id.background_two);
-        backgroundAnimation();
         name = (TextView) findViewById(R.id.name);
 
         if (!prefs.getBoolean("firstTime", false)) {
@@ -96,28 +89,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-    private void backgroundAnimation(){
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(10000L);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                final float height = backgroundOne.getHeight();
-                final float translationY = height * progress;
-                backgroundOne.setTranslationY(translationY);
-                backgroundTwo.setTranslationY(translationY - height);
-            }
-        });
-        animator.start();
     }
 
 }

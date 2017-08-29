@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
@@ -21,10 +22,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -84,8 +85,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         leftArrow = (ImageView) findViewById(R.id.leftArrow);
         rightArrow  = (ImageView) findViewById(R.id.rightArrow);
 
-        inputArrows();
-
         userReference = FirebaseDatabase.getInstance().getReference("users");
 
         pointTV = (TextView) findViewById(R.id.pointTV);
@@ -130,6 +129,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             public void onFinish() {
                 counter.setVisibility(View.GONE);
                 finished = true;
+                inputArrows();
                 fallLot();
             }
         }.start();
@@ -145,14 +145,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                         animator.pause();
                         animation.stop();
                         animation.selectDrawable(0);
+                        Log.d("newtonWidth",String.valueOf(newton.getWidth()));
                         break;
                     case MotionEvent.ACTION_DOWN:
-                        if (newton.getX() != width-newton.getWidth()) {
+                        if (newton.getX() != width-newton.getWidth()-rightArrow.getWidth()) {
                             leftArrow.setEnabled(false);
-                            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
+                            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()-rightArrow.getWidth()));
                             animator.setInterpolator(new LinearOutSlowInInterpolator());
-                            newton.setScaleX(1f);
-                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
+                            newton.setScaleType(ImageView.ScaleType.CENTER);
+                            newton.setScaleX(1);
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if (!animator.isPaused())
@@ -175,15 +176,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                         animator.pause();
                         animation.stop();
                         animation.selectDrawable(0);
+                        Log.d("newtonWidth",String.valueOf(newton.getWidth()));
                         break;
                     case MotionEvent.ACTION_DOWN:
                         rightArrow.setEnabled(false);
-                        if (newton.getX() != width-newton.getWidth()) {
+                        if (newton.getX() != leftArrow.getWidth()) {
                             rightArrow.setEnabled(false);
-                            animator = ObjectAnimator.ofFloat(newton, "x", 0);
+                            animator = ObjectAnimator.ofFloat(newton, "x", leftArrow.getWidth());
                             animator.setInterpolator(new LinearOutSlowInInterpolator());
-                            newton.setScaleX(-1f);
-                            //TODO-- EZT LE KELL VIZSGÁLNI MÉG -v
+                            newton.setScaleX(-1);
                             animation = (AnimationDrawable) newton.getDrawable();
                             animation.start();
                             if (!animator.isPaused())
@@ -304,26 +305,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private boolean collision(ImageView a, ImageView b){
-        int crop = 40;
-        float bl = a.getY()-crop;
-        float bt = a.getX()-crop;
-        float br = a.getWidth() + bl-crop;
-        float bb = a.getHeight() + bt-crop;
-        float pl = b.getY()-crop;
-        float pt = b.getX()-crop;
-        float pr = b.getWidth() + pl-crop;
-        float pb = b.getHeight() + pt-crop;
-        if (bl <= pr && bl >= pl && bt >= pt && bt <= pb) {
-            return true;
+        Rect appleRect = new Rect();
+        a.getHitRect(appleRect);
+        Rect playerRect = new Rect();
+        b.getHitRect(playerRect);
 
-        } else if (br >= pl && br <= pr && bb >= pt && bb <= pb) {
-            return true;
-        } else if (bt <= pb && bt >= pt && br >= pl && br <= pr) {
-            return true;
-        } else if (bb >= pt && bb <= pb && bl >= pl && bl <= pr) {
-            return true;
-        }
-        return false;
+        return(Rect.intersects(appleRect, playerRect));
     }
 
     private void sendScore(int point){
@@ -336,8 +323,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void moveRight(){
-        if (newton.getX() != width-newton.getWidth()) {
-            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()));
+        if (newton.getX() != width-newton.getWidth()-rightArrow.getWidth()) {
+            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()-rightArrow.getWidth()));
             animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(1f);
             animation = (AnimationDrawable) newton.getDrawable();
@@ -365,11 +352,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void moveLeft(){
-        if (newton.getX() != 0) {
+        if (newton.getX() != leftArrow.getWidth()) {
             if (!set.isStarted())
                 set.end();
-            animator = ObjectAnimator.ofFloat(newton, "x", 0);
+            animator = ObjectAnimator.ofFloat(newton, "x", leftArrow.getWidth());
             animator.setInterpolator(new LinearOutSlowInInterpolator());
+            newton.setScaleType(ImageView.ScaleType.CENTER);
             newton.setScaleX(-1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();

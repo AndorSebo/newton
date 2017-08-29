@@ -17,8 +17,8 @@ public class Multidex extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(!Global.isNetwork(Multidex.this))
-            ToastOX.error(Multidex.this,getResources().getString(R.string.network_nf),1200);
+        if (!Global.isNetwork(Multidex.this))
+            ToastOX.error(Multidex.this, getResources().getString(R.string.network_nf), 1200);
     }
 
     @Override

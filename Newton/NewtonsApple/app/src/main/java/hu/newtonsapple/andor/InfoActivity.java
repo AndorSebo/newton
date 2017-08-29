@@ -1,10 +1,9 @@
 package hu.newtonsapple.andor;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ public class InfoActivity extends AppCompatActivity {
 
     }
 
-    private String readText(){
+    private String readText() {
 
         String text = "";
         try {
@@ -46,7 +45,7 @@ public class InfoActivity extends AppCompatActivity {
             is.read(buffer);
             is.close();
             text = new String(buffer);
-        }catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return text;
@@ -56,8 +55,9 @@ public class InfoActivity extends AppCompatActivity {
     public void onBackPressed() {
         BackToMenu();
     }
-    private void BackToMenu(){
-        Intent menu = new Intent(InfoActivity.this,MainActivity.class);
+
+    private void BackToMenu() {
+        Intent menu = new Intent(InfoActivity.this, MainActivity.class);
         startActivity(menu);
         finish();
     }

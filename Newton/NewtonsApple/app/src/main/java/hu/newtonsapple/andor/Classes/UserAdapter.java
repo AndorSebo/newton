@@ -18,12 +18,12 @@ import hu.newtonsapple.andor.R;
 
 public class UserAdapter extends ArrayAdapter<User> {
 
+    Typeface tf;
     private Activity context;
     private List<User> userList;
-    Typeface tf;
 
     public UserAdapter(Activity context, List<User> userList) {
-        super(context,R.layout.toplist_item,userList);
+        super(context, R.layout.toplist_item, userList);
         this.context = context;
         this.userList = userList;
     }
@@ -37,7 +37,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView scoreTV = listViewItem.findViewById(R.id.scoreTV);
 
 
-        tf = Typeface.createFromAsset(context.getAssets(),"font.ttf");
+        tf = Typeface.createFromAsset(context.getAssets(), "font.ttf");
         nameTV.setTypeface(tf);
         scoreTV.setTypeface(tf);
 
@@ -47,7 +47,6 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         return listViewItem;
     }
-
 
 
 }

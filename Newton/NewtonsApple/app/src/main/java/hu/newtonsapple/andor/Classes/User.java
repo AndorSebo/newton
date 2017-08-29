@@ -8,7 +8,7 @@ public class User {
     String id, name;
     int point;
 
-    public User(){
+    public User() {
 
     }
 

@@ -1,16 +1,13 @@
 package hu.newtonsapple.andor;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import hu.newtonsapple.andor.Classes.Alerts;
@@ -34,19 +31,19 @@ public class MainActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.name);
 
         if (!prefs.getBoolean("firstTime", false)) {
-            Alerts.getName(MainActivity.this,editor, name);
+            Alerts.getName(MainActivity.this, editor, name);
             editor.putBoolean("firstTime", true);
             editor.putBoolean("vibrate", true).apply();
-        }else{
-            name.setText("Szia, "+prefs.getString("name","Játékos")+" jó játékot!");
+        } else {
+            name.setText("Szia, " + prefs.getString("name", "Játékos") + " jó játékot!");
         }
-        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+        tf = Typeface.createFromAsset(getAssets(), "font.ttf");
         name.setTypeface(tf);
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Alerts.getName(MainActivity.this,editor, name);
+                Alerts.getName(MainActivity.this, editor, name);
             }
         });
 
@@ -89,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onBackPressed() {
         finish();

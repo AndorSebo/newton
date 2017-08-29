@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.TextView;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -24,15 +21,15 @@ import hu.newtonsapple.andor.R;
 
 public class Alerts {
 
-    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set){
+    public static void alertToMenu(final Context context, final ObjectAnimator appleAnimator, final AnimatorSet set) {
         SweetAlertDialog toMenu;
 
-        if(appleAnimator != null && appleAnimator.isRunning())
+        if (appleAnimator != null && appleAnimator.isRunning())
             appleAnimator.pause();
         else if (appleAnimator != null)
             appleAnimator.resume();
 
-        if(set != null && set.isRunning())
+        if (set != null && set.isRunning())
             set.pause();
         else if (set != null)
             set.resume();
@@ -47,18 +44,18 @@ public class Alerts {
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        Intent menu = new Intent(context ,MainActivity.class);
+                        Intent menu = new Intent(context, MainActivity.class);
                         context.startActivity(menu);
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     }
                 })
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        if(appleAnimator != null){
+                        if (appleAnimator != null) {
                             appleAnimator.resume();
                         }
-                        if(set != null){
+                        if (set != null) {
                             set.resume();
                         }
                         sDialog.dismissWithAnimation();
@@ -71,11 +68,12 @@ public class Alerts {
             }
         });
     }
-    public static void alertToEnd(final Context context, int point){
+
+    public static void alertToEnd(final Context context, int point) {
         SweetAlertDialog toMenu;
         toMenu = new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
         toMenu.setTitleText("Vége a játéknak!");
-        toMenu.setContentText("A pontszámod: "+String.valueOf(point))
+        toMenu.setContentText("A pontszámod: " + String.valueOf(point))
                 .setCancelText("Vissza a menübe")
                 .setConfirmText("Új játék")
                 .setCustomImage(R.drawable.sadapple)
@@ -92,9 +90,9 @@ public class Alerts {
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        Intent menu = new Intent(context ,MainActivity.class);
+                        Intent menu = new Intent(context, MainActivity.class);
                         context.startActivity(menu);
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     }
                 })
                 .show();
@@ -106,8 +104,8 @@ public class Alerts {
         });
     }
 
-    public static void getName(Context context, final SharedPreferences.Editor editor, final TextView name){
-        final SweetAlertDialog nameDialog = new SweetAlertDialog(context,SweetAlertDialog.INPUT_TYPE);
+    public static void getName(Context context, final SharedPreferences.Editor editor, final TextView name) {
+        final SweetAlertDialog nameDialog = new SweetAlertDialog(context, SweetAlertDialog.INPUT_TYPE);
         nameDialog.setTitleText("Add meg a neved!");
         nameDialog.setConfirmText("Mentés");
         nameDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -115,8 +113,8 @@ public class Alerts {
             public void onClick(SweetAlertDialog sweetAlertDialog) {
                 editor.putString("name", sweetAlertDialog.getName());
                 editor.commit();
-                name.setText("Szia, "+sweetAlertDialog.getName()+" jó játékot!");
-                Log.d("Name",sweetAlertDialog.getName());
+                name.setText("Szia, " + sweetAlertDialog.getName() + " jó játékot!");
+                Log.d("Name", sweetAlertDialog.getName());
                 sweetAlertDialog.dismissWithAnimation();
             }
         }).show();

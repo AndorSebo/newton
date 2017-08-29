@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hu.newtonsapple.andor.GameActivity"
     android:background="@drawable/background"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context="hu.newtonsapple.andor.GameActivity">
+
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -17,18 +18,22 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="8dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/heart"/>
+                    android:src="@drawable/heart" />
+
                 <TextView
                     android:id="@+id/heartTV"
-                    style="@style/textStyle"/>
+                    style="@style/textStyle" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -38,7 +43,7 @@
                     android:id="@+id/leftArrow"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:src="@drawable/leftarrow"/>
+                    android:src="@drawable/leftarrow" />
 
             </LinearLayout>
         </LinearLayout>
@@ -56,17 +61,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:src="@drawable/newton_run"
-            android:scaleType="fitEnd"
             android:adjustViewBounds="true"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/newton_run" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="end"
             android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_gravity="end">
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -82,7 +87,7 @@
                 <TextView
                     android:id="@+id/pointTV"
                     style="@style/textStyle"
-                    android:layout_gravity="end"/>
+                    android:layout_gravity="end" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +116,7 @@
                     android:id="@+id/rightArrow"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:src="@drawable/rightarrow"/>
+                    android:src="@drawable/rightarrow" />
 
             </LinearLayout>
 

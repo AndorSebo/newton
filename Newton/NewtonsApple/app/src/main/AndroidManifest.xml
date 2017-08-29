@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon" >
+        tools:replace="android:icon">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorLandscape">
@@ -31,13 +31,13 @@
             android:screenOrientation="reverseLandscape" />
         <activity
             android:name=".OptionsActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ToplistActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".InfoActivity"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>

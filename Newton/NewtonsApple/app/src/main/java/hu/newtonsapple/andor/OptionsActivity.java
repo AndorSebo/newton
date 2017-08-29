@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ public class OptionsActivity extends AppCompatActivity {
     ImageView backArrow;
     Typeface tf;
     DiscreteSeekBar sensBar;
-    RadioButton arrows,sensor;
+    RadioButton arrows, sensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +52,19 @@ public class OptionsActivity extends AppCompatActivity {
 
         arrows = (RadioButton) findViewById(R.id.arrows);
         sensor = (RadioButton) findViewById(R.id.sensor);
-        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
-        TextView[] tvs = {vibrateTV,tabletTV,title,sensTV, inputTV};
+        tf = Typeface.createFromAsset(getAssets(), "font.ttf");
+        TextView[] tvs = {vibrateTV, tabletTV, title, sensTV, inputTV};
         for (TextView tv : tvs) tv.setTypeface(tf);
         arrows.setTypeface(tf);
         sensor.setTypeface(tf);
 
-        Log.d("inputType",prefs.getString("inputType","Arrows"));
+        Log.d("inputType", prefs.getString("inputType", "Arrows"));
 
-        if(prefs.getString("inputType","Arrows").equals("Arrows")) {
+        if (prefs.getString("inputType", "Arrows").equals("Arrows")) {
             arrows.setChecked(true);
             sensTV.setEnabled(false);
             sensBar.setEnabled(false);
-        }else{
+        } else {
             sensor.setChecked(true);
             sensTV.setEnabled(true);
             sensBar.setEnabled(true);
@@ -73,7 +72,7 @@ public class OptionsActivity extends AppCompatActivity {
         arrows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString("inputType","Arrows");
+                editor.putString("inputType", "Arrows");
                 editor.apply();
                 sensTV.setEnabled(false);
                 sensBar.setEnabled(false);
@@ -82,9 +81,9 @@ public class OptionsActivity extends AppCompatActivity {
         sensor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString("inputType","Sensor");
+                editor.putString("inputType", "Sensor");
                 editor.apply();
-                ToastOX.warning(OptionsActivity.this,getResources().getString(R.string.sens_warning),1200);
+                ToastOX.warning(OptionsActivity.this, getResources().getString(R.string.sens_warning), 1200);
                 sensTV.setEnabled(true);
                 sensBar.setEnabled(true);
             }
@@ -95,11 +94,11 @@ public class OptionsActivity extends AppCompatActivity {
         vibrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vibrate.isChecked()){
+                if (vibrate.isChecked()) {
                     editor.putBoolean("vibrate", false);
                     editor.apply();
                     vibrate.setChecked(prefs.getBoolean("vibrate", false));
-                }else{
+                } else {
                     editor.putBoolean("vibrate", true);
                     editor.apply();
                     vibrate.setChecked(prefs.getBoolean("vibrate", false));
@@ -107,7 +106,7 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
-        if(!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()){
+        if (!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
             tabletTV.setText(getResources().getString(R.string.tablet));
             vibrate.setChecked(false);
             vibrate.setClickable(false);
@@ -119,13 +118,14 @@ public class OptionsActivity extends AppCompatActivity {
                 BackToMenu();
             }
         });
-        sensBar.setProgress(prefs.getInt("sensValue",1));
+        sensBar.setProgress(prefs.getInt("sensValue", 1));
 
         sensBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
-                editor.putInt("sensValue",value).commit();
+                editor.putInt("sensValue", value).commit();
             }
+
             @Override
             public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
 
@@ -139,13 +139,14 @@ public class OptionsActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public void onBackPressed() {
         BackToMenu();
     }
 
-    private void BackToMenu(){
-        Intent menu = new Intent(OptionsActivity.this,MainActivity.class);
+    private void BackToMenu() {
+        Intent menu = new Intent(OptionsActivity.this, MainActivity.class);
         startActivity(menu);
         finish();
     }

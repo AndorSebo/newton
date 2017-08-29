@@ -14,14 +14,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
-import android.os.CountDownTimer;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -38,25 +38,24 @@ import hu.newtonsapple.andor.Classes.Alerts;
 import hu.newtonsapple.andor.Classes.Global;
 import hu.newtonsapple.andor.Classes.User;
 
-public class GameActivity extends AppCompatActivity implements SensorEventListener{
-    private int life = 3;
-    private int point = 0;
-    private double sens = 0.1;
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
+    final static int appleSpeed = 1100;
+    final static int userSpeed = 4000;
     TextView lifeTV, pointTV, counter, heightScoreTV;
-    ImageView newton,rightArrow,leftArrow;
+    ImageView newton, rightArrow, leftArrow;
     AnimationDrawable animation;
     ObjectAnimator animator, appleAnimator;
-
     ImageView[] apples = new ImageView[14];
     int height, width, fell, heightScore, stepSize;
     boolean finished = false, gameover = false, paused = false, arrows;
     SharedPreferences prefs;
     CountDownTimer ct;
-    final static int appleSpeed = 1100;
-    final static int userSpeed = 4000;
     DatabaseReference userReference;
     Typeface tf;
     AnimatorSet set = new AnimatorSet();
+    private int life = 3;
+    private int point = 0;
+    private double sens = 0.1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         SensorManager myManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor mySensor = myManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        tf = Typeface.createFromAsset(getAssets(),"font.ttf");
+        tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 
         myManager.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -83,7 +82,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         lifeTV.setText(String.valueOf(life));
 
         leftArrow = (ImageView) findViewById(R.id.leftArrow);
-        rightArrow  = (ImageView) findViewById(R.id.rightArrow);
+        rightArrow = (ImageView) findViewById(R.id.rightArrow);
 
         userReference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -99,26 +98,26 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         display.getSize(size);
         height = size.y;
         width = size.x;
-        stepSize = size.x/100 - 10;
+        stepSize = size.x / 100 - 10;
         if (stepSize < 20)
-            stepSize +=20;
+            stepSize += 20;
         fell = 0;
 
-        if(prefs.getString("inputType","Arrows").equals("Arrows")){
+        if (prefs.getString("inputType", "Arrows").equals("Arrows")) {
             rightArrow.setVisibility(View.VISIBLE);
             leftArrow.setVisibility(View.VISIBLE);
             arrows = true;
-        }else{
+        } else {
             rightArrow.setVisibility(View.GONE);
             leftArrow.setVisibility(View.GONE);
             arrows = false;
         }
 
-        heightScore = prefs.getInt("HeightScore",0);
-        sens = prefs.getInt("sensValue",1)/10;
+        heightScore = prefs.getInt("HeightScore", 0);
+        sens = prefs.getInt("sensValue", 1) / 10;
 
         heightScoreTV.setText(String.valueOf(heightScore));
-        TextView[] tvs = {lifeTV,pointTV,heightScoreTV, counter};
+        TextView[] tvs = {lifeTV, pointTV, heightScoreTV, counter};
         for (TextView tv : tvs) tv.setTypeface(tf);
 
         ct = new CountDownTimer(4000, 500) {
@@ -135,7 +134,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }.start();
     }
 
-    private void inputArrows(){
+    private void inputArrows() {
         rightArrow.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -145,12 +144,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                         animator.pause();
                         animation.stop();
                         animation.selectDrawable(0);
-                        Log.d("newtonWidth",String.valueOf(newton.getWidth()));
+                        Log.d("newtonWidth", String.valueOf(newton.getWidth()));
                         break;
                     case MotionEvent.ACTION_DOWN:
-                        if (newton.getX() != width-newton.getWidth()-rightArrow.getWidth()) {
+                        if (newton.getX() != width - newton.getWidth() - rightArrow.getWidth()) {
                             leftArrow.setEnabled(false);
-                            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()-rightArrow.getWidth()));
+                            animator = ObjectAnimator.ofFloat(newton, "x", (width - newton.getWidth() - rightArrow.getWidth()));
                             animator.setInterpolator(new LinearOutSlowInInterpolator());
                             newton.setScaleType(ImageView.ScaleType.CENTER);
                             newton.setScaleX(1);
@@ -176,7 +175,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                         animator.pause();
                         animation.stop();
                         animation.selectDrawable(0);
-                        Log.d("newtonWidth",String.valueOf(newton.getWidth()));
+                        Log.d("newtonWidth", String.valueOf(newton.getWidth()));
                         break;
                     case MotionEvent.ACTION_DOWN:
                         rightArrow.setEnabled(false);
@@ -205,7 +204,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void onBackPressed() {
         if (finished) {
             Alerts.alertToMenu(GameActivity.this, appleAnimator, set);
-        }else {
+        } else {
             ct.cancel();
             Intent menu = new Intent(GameActivity.this, MainActivity.class);
             startActivity(menu);
@@ -228,12 +227,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     sldAppleId[1] = randomApple(apples.length);
                 fallApple(sldAppleId[i]);
             }
-        }else{
+        } else {
             if (animator != null)
                 animator.pause();
             newton.setImageResource(R.drawable.newton_dead);
-            if (point > heightScore){
-                prefs.edit().putInt("HeightScore",point).apply();
+            if (point > heightScore) {
+                prefs.edit().putInt("HeightScore", point).apply();
                 sendScore(point);
             }
             Alerts.alertToEnd(GameActivity.this, point);
@@ -286,72 +285,71 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 apple.setBackgroundResource(0);
                 apple.setY(appleY);
                 fell++;
-                if (fell == 2){
-                    fell=0;
+                if (fell == 2) {
+                    fell = 0;
                     fallLot();
                 }
             }
         });
     }
 
-    private int fallLife(){
+    private int fallLife() {
         Random rn = new Random();
-        return  rn.nextInt(101);
+        return rn.nextInt(101);
     }
 
-    private int randomApple(int length){
+    private int randomApple(int length) {
         Random rn = new Random();
         return rn.nextInt(length);
     }
 
-    private boolean collision(ImageView a, ImageView b){
+    private boolean collision(ImageView a, ImageView b) {
         Rect appleRect = new Rect();
         a.getHitRect(appleRect);
         Rect playerRect = new Rect();
         b.getHitRect(playerRect);
 
-        return(Rect.intersects(appleRect, playerRect));
+        return (Rect.intersects(appleRect, playerRect));
     }
 
-    private void sendScore(int point){
-        String name = prefs.getString("name","Játékos");
+    private void sendScore(int point) {
+        String name = prefs.getString("name", "Játékos");
         int score = point;
         String id = userReference.push().getKey();
-        User user = new User(id,name,score);
+        User user = new User(id, name, score);
         userReference.child(id).setValue(user);
 
     }
 
-    private void moveRight(){
-        if (newton.getX() != width-newton.getWidth()-rightArrow.getWidth()) {
-            animator = ObjectAnimator.ofFloat(newton, "x", (width-newton.getWidth()-rightArrow.getWidth()));
+    private void moveRight() {
+        if (newton.getX() != width - newton.getWidth() - rightArrow.getWidth()) {
+            animator = ObjectAnimator.ofFloat(newton, "x", (width - newton.getWidth() - rightArrow.getWidth()));
             animator.setInterpolator(new LinearOutSlowInInterpolator());
             newton.setScaleX(1f);
             animation = (AnimationDrawable) newton.getDrawable();
             animation.start();
             set.setDuration(userSpeed);
             set.play(animator);
-            if(set.isStarted()) {
+            if (set.isStarted()) {
                 set.resume();
-            }else if(set.isPaused()){
+            } else if (set.isPaused()) {
                 set.end();
                 set.play(animator);
                 set.start();
-            }
-            else{
+            } else {
                 set.start();
             }
         }
     }
 
-    private void animatorStop(){
+    private void animatorStop() {
         set.setupStartValues();
         set.cancel();
         animation.selectDrawable(0);
         animation.stop();
     }
 
-    private void moveLeft(){
+    private void moveLeft() {
         if (newton.getX() != leftArrow.getWidth()) {
             if (!set.isStarted())
                 set.end();
@@ -363,18 +361,18 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             animation.start();
             set.setDuration(userSpeed);
             set.play(animator);
-            if(set.isStarted()) {
+            if (set.isStarted()) {
                 set.resume();
-            }else if(set.isPaused()){
+            } else if (set.isPaused()) {
                 set.end();
                 set.play(animator);
                 set.start();
-            }
-            else{
+            } else {
                 set.start();
             }
         }
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -383,11 +381,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (finished && !gameover && !paused && !arrows)
-            if (sensorEvent.values[1] < -1+sens)
+            if (sensorEvent.values[1] < -1 + sens)
                 moveRight();
-            else if(sensorEvent.values[1] > 1-sens)
+            else if (sensorEvent.values[1] > 1 - sens)
                 moveLeft();
-            else{
+            else {
                 if (animator != null)
                     animatorStop();
             }
